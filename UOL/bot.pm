@@ -121,7 +121,7 @@ Isso é o básico. Se não entendeu, pare por aqui.
 
 
 use vars qw(@ISA $VERSION $OCR);
-$VERSION = "2.0";
+$VERSION = "2.01";
 
 # define constantes
 use constant ENTRY	=> 'http://batepapo.uol.com.br/bp/excgi/salas_new.shl';
@@ -154,6 +154,7 @@ use IO::Socket;
 use LWP::UserAgent;
 
 # tenta carregar o módulo OCR
+#perl2exe_include UOL::OCR
 $OCR = 'yes' if eval 'require UOL::OCR';
 
 
@@ -356,7 +357,7 @@ sub new {
 
    # sujjjjjjjju!
    if (not defined $self->{tries}) {
-      $self->{tries} = 3;
+      $self->{tries} = 10;
    } elsif ($self->{tries} < 1) {
       croak "número de tentativas especificado deve ser maior que 1!";
    }
@@ -787,7 +788,7 @@ sub join {
    $self->{header}->header ('Referer', $room);
 
    # pega o !@#$%^& código em imagem...
-   $resp->content =~ m/="([a-z0-9\-\_]{32,33})"\s+var/is ||
+   $resp->content =~ m/IMGKEY=([a-z0-9\-\_]{32,33})\&/is ||
       croak "join: servidor enviou resposta inválida (URL da imagem-código não encontrada)";
 
 ### havia uma FALHA aqui, servidor deu a louca de retornar 33 caracteres :/
@@ -1675,7 +1676,7 @@ de bate-papo e seus respectivos títulos.
 
 =head1 VERSÃO
 
-2.0
+2.01
 
 =cut
 
@@ -1718,6 +1719,10 @@ Algumas correções menores também.
 
 B<2.0> I<(04/Ago/2002)> - Código fortemente reestruturado. Muitas mudanças.
 Módulo C<UOL::OCR> incluído.
+
+=item *
+
+B<2.01> I<(06/Dez/2002)> - Correção menor devido à atualização de protocolo nos servidores do UOL.
 
 =back
 

@@ -28,11 +28,20 @@ use Carp;
 use Cwd qw(abs_path);
 use File::Basename;
 use FileHandle;
-croak "! UOL::OCR: no Image::Magick\n" unless eval 'require Image::Magick';
 use IPC::Open2;
 use POSIX qw(ceil);
 
-my $path	= abs_path (dirname ($INC{'UOL/OCR.pm'}));
+#perl2exe_include Image::Magick
+croak "! UOL::OCR: no Image::Magick\n" unless eval 'require Image::Magick';
+
+my $path;
+unless ($^X =~ m%(^|[/\\])(perl)|(perl\.exe)$%i) {
+   ($path) = $^X =~ m%^(.*)[/\\]%;
+   $path .= '/UOL';
+} else {
+   $path	= abs_path (dirname ($INC{'UOL/OCR.pm'}));
+}
+
 $gocr		= "$path/gocr";
 if ($^O =~ /Win32/) {
    $gocr =~ s%/%\\%g;
@@ -53,15 +62,19 @@ sub jpg2txt {
    ### debug ###
 
    $img->Despeckle;
+   $img->Border (width => 10, height => 10, fill => 'white');
    $img->Enhance;
    $img->Contrast (sharpen => 'True');
    $img->Modulate (brightness => 105);
    $img->Level ('black-point' => 28000, 'mid-point' => 1.0, 'white-point' => 48000);
    $img->Quantize (colors => 2, colorspace => 'gray', dither => 'False');
-   $img->Crop (x => 0, y => 0, width => 300, height => 78);
+   $img->Crop (x => 10, y => 10, width => $img->Get ('base-columns'), height => $img->Get ('base-rows'));
    $img->Trim;
    $img->Set (magick => 'pbm');
    ($blob) = $img->ImageToBlob;
+
+   # cleanup (só para ter certeza...)
+   undef $img;
 
    ### debug ###
    &ImgDebug ($blob) if $verbosity & 2;
@@ -101,6 +114,9 @@ sub jpg2txt {
    print $wtr @res;
    local $_ = lc <$rdr>;
    waitpid $pid, 0;
+
+   # cleanup (só para ter certeza...)
+   @res = ();
 
    s/\s+//g;
    return (!/\(/ && /([a-z0-9]{4})/) ? $1 : '';

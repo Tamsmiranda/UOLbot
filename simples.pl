@@ -2,10 +2,13 @@
 use strict;
 use UOLbot;
 
+$| = 1;
+
 ##############
 # para testes
 #$UOL::bot::OCR = 0;
-$UOL::OCR::verbosity = 7;
+#print $UOL::OCR::VERSION, "\n";
+#$UOL::OCR::verbosity = 7;
 #LWP::Debug::level ('+');
 ##############
 
@@ -33,15 +36,15 @@ print "listando sub-grupo $subgrp\n";
 my @rooms = $bot->list_subgrp ($subgrp);
 die "can't list_subgrp(): $!" unless @rooms;
 
-# sala #16 ('Saint Charles 1') ;)
-my $url = $rooms[16]->{URL};
+# sala #17 ('Saint Charles 1') ;)
+my $url = $rooms[17]->{URL};
 
 # espia a sala
 print "espiando a sala $url\n";
 $bot->brief ($url) || die "can't brief(): $!";
 
 # imprime a lista de usuários conectados
-print "users online: ", join ('|', $bot->users), "\n";
+print "users online: ", join ('>', $bot->users), "\n";
 
 # entra na sala escolhida
 print "entrando na sala $url\n";

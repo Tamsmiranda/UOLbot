@@ -1,211 +1,256 @@
-<HTML>
-<HEAD>
-<TITLE>UOLbot</TITLE>
-<LINK REV="made" HREF="mailto:">
-</HEAD>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>UOL::bot</title>
+<link rev="made" href="mailto:root@localhost" />
+</head>
 
-<BODY>
+<body style="background-color: white">
 
-<A NAME="__index__"></A>
+<p><a name="__index__"></a></p>
 <!-- INDEX BEGIN -->
 
-<UL>
+<ul>
 
-	<LI><A HREF="#nome">NOME</A></LI>
-	<LI><A HREF="#plataformas suportados">PLATAFORMAS SUPORTADOS</A></LI>
-	<LI><A HREF="#resumo">RESUMO</A></LI>
-	<LI><A HREF="#descrição">DESCRIÇÃO</A></LI>
-	<LI><A HREF="#introdução">INTRODUÇÃO</A></LI>
-	<LI><A HREF="#requisitos">REQUISITOS</A></LI>
-	<LI><A HREF="#construtor">CONSTRUTOR</A></LI>
-	<LI><A HREF="#métodos">MÉTODOS</A></LI>
-	<LI><A HREF="#bugs">BUGS</A></LI>
-	<LI><A HREF="#referências">REFERÊNCIAS</A></LI>
-	<LI><A HREF="#versão">VERSÃO</A></LI>
-	<LI><A HREF="#histórico">HISTÓRICO</A></LI>
-	<LI><A HREF="#copyright">COPYRIGHT</A></LI>
-	<LI><A HREF="#autor">AUTOR</A></LI>
-</UL>
+	<li><a href="#nome">NOME</a></li>
+	<li><a href="#plataformas_suportados">PLATAFORMAS SUPORTADOS</a></li>
+	<li><a href="#resumo">RESUMO</a></li>
+	<li><a href="#descrição">DESCRIÇÃO</a></li>
+	<li><a href="#introdução">INTRODUÇÃO</a></li>
+	<li><a href="#requisitos">REQUISITOS</a></li>
+	<li><a href="#construtor">CONSTRUTOR</a></li>
+	<li><a href="#métodos">MÉTODOS</a></li>
+	<li><a href="#bugs">BUGS</a></li>
+	<li><a href="#referências">REFERÊNCIAS</a></li>
+	<li><a href="#versão">VERSÃO</a></li>
+	<li><a href="#histórico">HISTÓRICO</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+	<li><a href="#autor">AUTOR</a></li>
+</ul>
 <!-- INDEX END -->
 
-<HR>
-<P>
-<H1><A NAME="nome">NOME</A></H1>
-<P>UOLbot - interface Perl para bate-papo do UOL</P>
-<P>
-<HR>
-<H1><A NAME="plataformas suportados">PLATAFORMAS SUPORTADOS</A></H1>
-<P>Teoricamente, <STRONG>todos</STRONG> onde roda o <EM>perl</EM>. Oficialmente, foi testado em:</P>
-<UL>
-<LI>
+<hr />
+<p>
+</p>
+<h1><a name="nome">NOME</a></h1>
+<p>UOLbot - interface Perl para bate-papo do UOL</p>
+<p>
+</p>
+<hr />
+<h1><a name="plataformas_suportados">PLATAFORMAS SUPORTADOS</a></h1>
+<p>Teoricamente, <strong>todos</strong> onde roda o <em>perl</em>. Oficialmente, foi testado em:</p>
+<ul>
+<li></li>
 Linux
 (perl 5.6.1)
-<P></P>
-<LI>
+<p></p>
+<li></li>
 Windows
 (ActivePerl 5.6.1 Build 632)
-<P></P></UL>
-<P>
-<HR>
-<H1><A NAME="resumo">RESUMO</A></H1>
-<PRE>
+<p></p></ul>
+<p>
+</p>
+<hr />
+<h1><a name="resumo">RESUMO</a></h1>
+<pre>
   #!/usr/bin/perl
-  use UOLbot;</PRE>
-<PRE>
-  my $bot = new UOLbot (Nick =&gt; 'uolbot');</PRE>
-<PRE>
+  use UOLbot;</pre>
+<pre>
+  my $bot = new UOLbot (Nick =&gt; 'uolbot');</pre>
+<pre>
   $bot-&gt;login ('batepapo4.uol.com.br:3999');
   $bot-&gt;send (&quot;Hello World!&quot;);
-  $bot-&gt;logout;</PRE>
-<PRE>
-  exit;</PRE>
-<P>
-<HR>
-<H1><A NAME="descrição">DESCRIÇÃO</A></H1>
-<P>O <CODE>UOLbot</CODE> é um módulo Perl que implementa interface para webchat (batepapo) do
+  $bot-&gt;logout;</pre>
+<pre>
+  exit;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="descrição">DESCRIÇÃO</a></h1>
+<p>O <code>UOLbot</code> é um módulo Perl que implementa interface para webchat (batepapo) do
 UOL (http://www.uol.com.br/). Basicamente, a idéia é poder acessar as funções
-comunicativas do chat <STRONG>de fora</STRONG> do navegador. No caso, à partir de um programa
+comunicativas do chat <strong>de fora</strong> do navegador. No caso, à partir de um programa
 escrito em Perl. Um detalhe em destaque: a intenção é implementar interface
-<STRONG>completa</STRONG>. Por exemplo, clientes tais como Jane, UOLME e Chat-Nóia 666
+<strong>completa</strong>. Por exemplo, clientes tais como Jane, UOLME e Chat-Nóia 666
 implementam só um pouco à mais do que parte interativa. ``O grosso'' do trabalho
-em tais clientes é feito pelas DLLs do <CODE>Internet Explorer</CODE>. Já o <CODE>UOLbot</CODE> é
-independente de <CODE>Internet Explorer</CODE> assim como é independente do <CODE>Windows</CODE>
-como todo.</P>
-<P>Então, conforme o próprio nome diz, você pode escrever bots de propaganda
+em tais clientes é feito pelas DLLs do <code>Internet Explorer</code>. Já o <code>UOLbot</code> é
+independente de <code>Internet Explorer</code> assim como é independente do <code>Windows</code>
+como todo.</p>
+<p>Então, conforme o próprio nome diz, você pode escrever bots de propaganda
 (robôs de propaganda que andam de sala em sala enchendo o saco das pessoas)
-utilizando <CODE>UOLbot</CODE>. Você também pode fazer algo útil como o primeiro cliente
-de batepapo UOL que seja <EM>cross-platform</EM>. Fiz de tudo para tais tarefas sejam
-mais simplificadas possíveis, apenas repare no exemplo acima ;)</P>
-<P>Bom, qualquer coisa, esse projeto está <EM>quase</EM> sempre em expansão. Comecei
+utilizando <code>UOLbot</code>. Você também pode fazer algo útil como o primeiro cliente
+de batepapo UOL que seja <em>cross-platform</em>. Fiz de tudo para tais tarefas sejam
+mais simplificadas possíveis, apenas repare no exemplo acima ;)</p>
+<p>Bom, qualquer coisa, esse projeto está <em>quase</em> sempre em expansão. Comecei
 aplicando uma engenharia reversa para saber como o
-<EM>Microsoft Internet Explorer 6.0</EM> interage com servidores do UOL
+<em>Microsoft Internet Explorer 6.0</em> interage com servidores do UOL
 (sim, a lógica de operação é do IE do começo ao fim), e atualmente
 tenho em mãos um módulo orientado à objetos (híbrido, para ser honesto) que
-faz virtualmente tudo o que <STRONG>você</STRONG> faria num webchat.</P>
-<P><EM>Obs</EM>: antes que me pergunte, ``eu estou lendo em português aqui,
-então por que <A HREF="#item_send"><CODE>send</CODE></A> e não <EM>enviar</EM>, ou <A HREF="#item_logout"><CODE>logout</CODE></A> ao invés de <EM>sair</EM>?''
-A razão é simples: o ``resto'' do <EM>perl</EM> está em inglês, certo?
-Por mim, fica estranho ler e entender o que faz algo como</P>
-<PRE>
-  next if $bot-&gt;enviar and not scalar $bot-&gt;usuarios;</PRE>
-<P>
-<HR>
-<H1><A NAME="introdução">INTRODUÇÃO</A></H1>
-<P>Agora, o princípio ativo. Antes de tudo, você deve criar uma instância
-do bot:</P>
-<PRE>
-  my $bot = new UOLbot (Nick =&gt; 'uolbot');</PRE>
-<P>O parâmetro <EM>Nick</EM> especifica o nickname do bot.
+faz virtualmente tudo o que <strong>você</strong> faria num webchat.</p>
+<p><em>Obs</em>: antes que me pergunte, ``eu estou lendo em português aqui,
+então por que <a href="#item_send"><code>send</code></a> e não <em>enviar</em>, ou <a href="#item_logout"><code>logout</code></a> ao invés de <em>sair</em>?''
+A razão é simples: o ``resto'' do <em>perl</em> está em inglês, certo?
+Por mim, fica estranho ler e entender o que faz algo como</p>
+<pre>
+  next if $bot-&gt;enviar and not scalar $bot-&gt;usuarios;</pre>
+<p>
+</p>
+<hr />
+<h1><a name="introdução">INTRODUÇÃO</a></h1>
+<p>Agora, o princípio ativo. Antes de tudo, você deve criar uma instância
+do bot:</p>
+<pre>
+  my $bot = new UOLbot (Nick =&gt; 'uolbot');</pre>
+<p>O parâmetro <em>Nick</em> especifica o nickname do bot.
 Você pode passar outros, que serão descritos posteriormente.
-Você também pode <STRONG>não</STRONG> passar nenhum, aí o seu bot será um
+Você também pode <strong>não</strong> passar nenhum, aí o seu bot será um
 discreto ``unnamed''.
 Você pode ter várias instâncias, só não sei qual o sentido
-disso. Vários robôs para várias salas em um só programa?</P>
-<P>Pronto, você criou o seu bot... E agora? Ele deve entrar numa sala, né?</P>
-<PRE>
-  $bot-&gt;login ('batepapo4.uol.com.br:3999');</PRE>
-<P>(ótima sala para propaganda, eheheh)
-Aí você passa a URL da sala. É o único parâmetro <STRONG>necessário</STRONG>.
+disso. Vários robôs para várias salas em um só programa?</p>
+<p>Pronto, você criou o seu bot... E agora? Ele deve entrar numa sala, né?</p>
+<pre>
+  $bot-&gt;login ('batepapo4.uol.com.br:3999');</pre>
+<p>(ótima sala para propaganda, eheheh)
+Aí você passa a URL da sala. É o único parâmetro <strong>necessário</strong>.
 É claro que ter que saber essa URL é um pé no saco, você pode entrar na
-sala só sabendo o seu nome/número. Mas isso é para depois.</P>
-<P>Opa, mas espere um pouco. Você já deve ter percebido aqueles códigos de
+sala só sabendo o seu nome/número. Mas isso é para depois.</p>
+<p>Opa, mas espere um pouco. Você já deve ter percebido aqueles códigos de
 verificação anti-spam, né (antes não existia isso não)... O que fazer
-agora? <STRONG>NADA</STRONG>. Lhes apresento orgulhosamente o <CODE>UOL::OCR</CODE>!!! É um
+agora? <strong>NADA</strong>. Lhes apresento orgulhosamente o <code>UOL::OCR</code>!!! É um
 sub-componente composto por filtros digitais de imagem e um programa de
-OCR (<EM>Optical Character Recognition</EM>), atualmente o <CODE>jocr</CODE>
+OCR (<em>Optical Character Recognition</em>), atualmente o <code>jocr</code>
 (http://jocr.sourceforge.net). Tal componente trata dos códigos de verificação
-para você, e aparentemente muito bem ;)</P>
-<P>Bom, e estando na sala, o que fazer? Falar!</P>
-<PRE>
-  $bot-&gt;send (&quot;Hello World!&quot;);</PRE>
-<P>``Oi mundo'' <CODE>:P</CODE>
-Sem comentários aqui.</P>
-<P>Quando você ``falou'' tudo o que quis, tchau para todos!</P>
-<PRE>
-  $bot-&gt;logout;</PRE>
-<P>Isso é o básico. Se não entendeu, pare por aqui.</P>
-<P>
-<HR>
-<H1><A NAME="requisitos">REQUISITOS</A></H1>
-<UL>
-<LI>
+para você, e aparentemente muito bem ;)</p>
+<p>Bom, e estando na sala, o que fazer? Falar!</p>
+<pre>
+  $bot-&gt;send (&quot;Hello World!&quot;);</pre>
+<p>``Oi mundo'' <code>:P</code>
+Sem comentários aqui.</p>
+<p>Quando você ``falou'' tudo o que quis, tchau para todos!</p>
+<pre>
+  $bot-&gt;logout;</pre>
+<p>Isso é o básico. Se não entendeu, pare por aqui.</p>
+<p>
+</p>
+<hr />
+<h1><a name="requisitos">REQUISITOS</a></h1>
+<ul>
+<li></li>
 LWP - The World-Wide Web library for Perl (libwww-perl)
-<P></P>
-<LI>
-Image::Magick <EM>(opcional)</EM>
-<P></P></UL>
-<P>
-<HR>
-<H1><A NAME="construtor">CONSTRUTOR</A></H1>
-<DL>
-<DT><STRONG><A NAME="item_new"><CODE>new ([ARGS])</CODE></A></STRONG><BR>
-<DD>
-Construtor para o bot. Retorna a referência para objeto <CODE>UOL::bot</CODE>.
-Argumentos <CODE>ARGS</CODE> devem ser passados em forma:
-<PRE>
+<p></p>
+<li></li>
+Image::Magick <em>(opcional)</em>
+<p></p></ul>
+<p>
+</p>
+<hr />
+<h1><a name="construtor">CONSTRUTOR</a></h1>
+<dl>
+<dt><strong><a name="item_new"><code>new ([ARGS])</code></a></strong><br />
+</dt>
+<dd>
+Construtor para o bot. Retorna a referência para objeto <code>UOL::bot</code>.
+Argumentos <code>ARGS</code> devem ser passados em forma:
+</dd>
+<dd>
+<pre>
   new (Chave1 =&gt; 'valor1',
-       Chave2 =&gt; 2);</PRE>
-<P>Note que alguns dos argumentos você poderá alterar posteriormente
+       Chave2 =&gt; 2);</pre>
+</dd>
+<dd>
+<p>Note que alguns dos argumentos você poderá alterar posteriormente
 com métodos apropriados, e outros não.
-Argumentos válidos (<STRONG>todos</STRONG> opcionais):</P>
-<DL>
-<DT><STRONG><A NAME="item_UA"><EM>UA</EM></A></STRONG><BR>
-<DD>
-referência para objeto <CODE>LWP::UserAgent</CODE> externo (é criada instância interna por default)
-<P></P>
-<DT><STRONG><A NAME="item_Nick"><EM>Nick</EM></A></STRONG><BR>
-<DD>
-o nickname (valor default é <EM>``unnamed''</EM>)
-<P></P>
-<DT><STRONG><A NAME="item_Color"><EM>Color</EM></A></STRONG><BR>
-<DD>
-a cor do nickname (valor default é <EM>0</EM>)
-<P><EM>Obs</EM>: valores possíveis são:</P>
-<PRE>
+Argumentos válidos (<strong>todos</strong> opcionais):</p>
+</dd>
+<dl>
+<dt><strong><a name="item_ua"><em>UA</em></a></strong><br />
+</dt>
+<dd>
+referência para objeto <code>LWP::UserAgent</code> externo (é criada instância interna por default)
+</dd>
+<p></p>
+<dt><strong><a name="item_nick"><em>Nick</em></a></strong><br />
+</dt>
+<dd>
+o nickname (valor default é <em>``unnamed''</em>)
+</dd>
+<p></p>
+<dt><strong><a name="item_color"><em>Color</em></a></strong><br />
+</dt>
+<dd>
+a cor do nickname (valor default é <em>0</em>)
+</dd>
+<dd>
+<p><em>Obs</em>: valores possíveis são:</p>
+</dd>
+<dd>
+<pre>
   0 - Preto
   1 - Vermelho
   2 - Verde
   3 - Azul
   4 - Laranja
   5 - Cinza
-  6 - Roxo</PRE>
-<P></P>
-<DT><STRONG><A NAME="item_Avatar"><EM>Avatar</EM></A></STRONG><BR>
-<DD>
+  6 - Roxo</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_avatar"><em>Avatar</em></a></strong><br />
+</dt>
+<dd>
 define ``carinha'' na frente do nick (número inteiro, para ser descoberto na tentativa e erro :(
-<P><EM>Obs</EM>: a ``carinha'' só vai aparecer se você for autenticado com <A HREF="#item_auth"><CODE>auth</CODE></A>!</P>
-<P><EM>Obs2</EM>: pra tirar a ``carinha'' já definida, chame <A HREF="#item_avatar"><CODE>$bot-&gt;avatar (-1)</CODE></A>.</P>
-<P></P>
-<DT><STRONG><A NAME="item_Fast"><EM>Fast</EM></A></STRONG><BR>
-<DD>
-se setado em <EM>1</EM> faz <CODE>UOLbot</CODE> pular passos desnecessários de autenticação/login na sala.
+</dd>
+<dd>
+<p><em>Obs</em>: a ``carinha'' só vai aparecer se você for autenticado com <a href="#item_auth"><code>auth</code></a>!</p>
+</dd>
+<dd>
+<p><em>Obs2</em>: pra tirar a ``carinha'' já definida, chame <a href="#item_avatar"><code>$bot-&gt;avatar (-1)</code></a>.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_fast"><em>Fast</em></a></strong><br />
+</dt>
+<dd>
+se setado em <em>1</em> faz <code>UOLbot</code> pular passos desnecessários de autenticação/login na sala.
 Pode fazer diferença em conexões lentas, porém pode gerar incompatibilidades, cuidado ao
 usar!
-<P></P>
-<DT><STRONG><A NAME="item_Tries"><EM>Tries</EM></A></STRONG><BR>
-<DD>
+</dd>
+<p></p>
+<dt><strong><a name="item_tries"><em>Tries</em></a></strong><br />
+</dt>
+<dd>
 número de tentativas para processar/reentrar código de verificação. Tenha em mente que o
-<EM>OCR</EM> embutido pode errar para algum tipo de fonte/fundo/texto, porém quem sabe se na
-próxima ele acerta? Default é <EM>3</EM>.
-<P></P>
-<DT><STRONG><A NAME="item_Auth_Magic"><EM>Auth_Magic</EM></A></STRONG><BR>
-<DD>
-preconfigura o <EM>cookie mágico</EM> que UOL utiliza para saber se o usuário é registrado.
-Uma boa idéia é não tocar nisso, se quiser experimentar, primeiro dê um <A HREF="#item_auth"><CODE>auth</CODE></A> com
+<em>OCR</em> embutido pode errar para algum tipo de fonte/fundo/texto, porém quem sabe se na
+próxima ele acerta? Default é <em>3</em>.
+</dd>
+<p></p>
+<dt><strong><a name="item_auth_magic"><em>Auth_Magic</em></a></strong><br />
+</dt>
+<dd>
+preconfigura o <em>cookie mágico</em> que UOL utiliza para saber se o usuário é registrado.
+Uma boa idéia é não tocar nisso, se quiser experimentar, primeiro dê um <a href="#item_auth"><code>auth</code></a> com
 login/senha válidos, depois dê um
-<PRE>
-  print $bot-&gt;auth_magic, &quot;\n&quot;;</PRE>
-<P>depois copie o que for impresso e cole no</P>
-<PRE>
-  my $bot = new UOLbot (Auth_Magic =&gt; ...);</PRE>
-<P></P>
-<DT><STRONG><A NAME="item_ImgCode_Handler"><EM>ImgCode_Handler</EM></A></STRONG><BR>
-<DD>
+</dd>
+<dd>
+<pre>
+  print $bot-&gt;auth_magic, &quot;\n&quot;;</pre>
+</dd>
+<dd>
+<p>depois copie o que for impresso e cole no</p>
+</dd>
+<dd>
+<pre>
+  my $bot = new UOLbot (Auth_Magic =&gt; ...);</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_imgcode_handler"><em>ImgCode_Handler</em></a></strong><br />
+</dt>
+<dd>
 referência para a rotina que vai processar a imagem com código de verificação.
 A minha sugestão é que você não toque nisso. O default é tentar carregar um
-<EM>OCR</EM> aqui, se falhar, então a URL da imagem com código de verificação é impressa
+<em>OCR</em> aqui, se falhar, então a URL da imagem com código de verificação é impressa
 e você (usuário) tem que ler/digitar... Argh. De qualquer forma, a sintaxe é:
-<PRE>
+</dd>
+<dd>
+<pre>
   ImgCode_Handler =&gt; \&amp;my_imgcode_handler
   ...
   sub my_imgcode_handler {
@@ -215,211 +260,282 @@ e você (usuário) tem que ler/digitar... Argh. De qualquer forma, a sintaxe é:
      my $resp = $ua-&gt;request ($req);
      ...
      return $code;
-  }</PRE>
-<P>No caso:</P>
-<P><EM>$req</EM> é instância <CODE>HTTP::Request</CODE> da imagem-código
-<EM>$ua</EM> é instância <CODE>LWP::UserAgent</CODE> atualmente usada pelo <CODE>UOLbot</CODE>
-<EM>$code</EM> é código de 4 caracteres [a-z0-9]</P>
-<P></P>
-<DT><STRONG><A NAME="item_Listen_Handler"><EM>Listen_Handler</EM></A></STRONG><BR>
-<DD>
+  }</pre>
+</dd>
+<dd>
+<p>No caso:</p>
+</dd>
+<dd>
+<p><em>$req</em> é instância <code>HTTP::Request</code> da imagem-código
+<em>$ua</em> é instância <code>LWP::UserAgent</code> atualmente usada pelo <code>UOLbot</code>
+<em>$code</em> é código de 4 caracteres [a-z0-9]</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_listen_handler"><em>Listen_Handler</em></a></strong><br />
+</dt>
+<dd>
 referência para a rotina que vai processar as
 informações recebidas da sala (indefinido por default).
 Por exemplo:
-<PRE>
-  Listen_Handler =&gt; sub { print $_[0] }</PRE>
-<P>imprime qualquer coisa recebida e</P>
-<PRE>
+</dd>
+<dd>
+<pre>
+  Listen_Handler =&gt; sub { print $_[0] }</pre>
+</dd>
+<dd>
+<p>imprime qualquer coisa recebida e</p>
+</dd>
+<dd>
+<pre>
   Listen_Handler =&gt; \&amp;listen_handler
   ...
   sub listen_handler {
      my $data = shift;
      ...
      return;
-  }</PRE>
-<P>define a sub-rotina <EM>listen_handler</EM> como handler de 'escuta'.
-Nesse caso, variável <EM>$data</EM> recebe pacotes com código HTML recebidos.</P>
-<P><EM>Obs</EM>: lembre que nem sempre há uma mensagem em um pacote. O servidor
-(ou buffer do sistema operacional) pode juntar vários pacotes num só.</P>
-<P></P></DL>
-</DL>
-<P>
-<HR>
-<H1><A NAME="métodos">MÉTODOS</A></H1>
-<P>Os métodos do <CODE>UOLbot</CODE> são:</P>
-<DL>
-<DT><STRONG><A NAME="item_ua"><CODE>ua</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_nick"><CODE>nick</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_color"><CODE>color</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_avatar"><CODE>avatar</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_fast"><CODE>fast</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_tries"><CODE>tries</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_auth_magic"><CODE>auth_magic</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_imgcode_handler"><CODE>imgcode_handler</CODE></A></STRONG><BR>
-<DD>
-<DT><STRONG><A NAME="item_listen_handler"><CODE>listen_handler</CODE></A></STRONG><BR>
-<DD>
-Métodos para ler/definir os parâmetros definidos pelo <A HREF="#item_new"><CODE>new</CODE></A>.
-<P><EM>Obs</EM>: Você pode ler os valores a qualquer momento, mas só poderá
-definir quando a instância <EM>não estiver logada</EM> com <A HREF="#item_login"><CODE>login</CODE></A>!</P>
-<P></P>
-<DT><STRONG><A NAME="item_list_subgrp"><CODE>list_subgrp (SUBGRP)</CODE></A></STRONG><BR>
-<DD>
-Enumera as salas de bate-papo de um sub-grupo <CODE>SUBGRP</CODE>. O tal sub-grupo
+  }</pre>
+</dd>
+<dd>
+<p>define a sub-rotina <em>listen_handler</em> como handler de 'escuta'.
+Nesse caso, variável <em>$data</em> recebe pacotes com código HTML recebidos.</p>
+</dd>
+<dd>
+<p><em>Obs</em>: lembre que nem sempre há uma mensagem em um pacote. O servidor
+(ou buffer do sistema operacional) pode juntar vários pacotes num só.</p>
+</dd>
+<p></p></dl>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="métodos">MÉTODOS</a></h1>
+<p>Os métodos do <code>UOLbot</code> são:</p>
+<dl>
+<dt><strong><a name="item_ua"><code>ua</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_nick"><code>nick</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_color"><code>color</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_avatar"><code>avatar</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_fast"><code>fast</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_tries"><code>tries</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_auth_magic"><code>auth_magic</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_imgcode_handler"><code>imgcode_handler</code></a></strong><br />
+</dt>
+<dt><strong><a name="item_listen_handler"><code>listen_handler</code></a></strong><br />
+</dt>
+<dd>
+Métodos para ler/definir os parâmetros definidos pelo <a href="#item_new"><code>new</code></a>.
+</dd>
+<dd>
+<p><em>Obs</em>: Você pode ler os valores a qualquer momento, mas só poderá
+definir quando a instância <em>não estiver logada</em> com <a href="#item_login"><code>login</code></a>!</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_list_subgrp"><code>list_subgrp (SUBGRP)</code></a></strong><br />
+</dt>
+<dd>
+Enumera as salas de bate-papo de um sub-grupo <code>SUBGRP</code>. O tal sub-grupo
 é o documento onde nomes das salas, suas URLs e suas lotações são fornecidos.
-<A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A> é simplesmente uma interface para esse documento.
-Parâmetro <CODE>SUBGRP</CODE> é uma string com URL de formato
-<EM>'http://batepapo.uol.com.br/bp/excgi/salas_new.cgi?ID=idim_he.conf'</EM>
-ou então simplesmente <EM>'idim_he.conf'</EM>. Os dois são equivalentes.
-Quando você usa <A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A> antes de <A HREF="#item_login"><CODE>login</CODE></A>, <CODE>SUBGRP</CODE> é salvo e
-utilizado como <CODE>REF</CODE> de <A HREF="#item_login"><CODE>login</CODE></A> automaticamente. O método retorna
-um array de hashes se tiver sucesso e <EM>()</EM> se houver falha. O array
+<a href="#item_list_subgrp"><code>list_subgrp</code></a> é simplesmente uma interface para esse documento.
+Parâmetro <code>SUBGRP</code> é uma string com URL de formato
+<em>'http://batepapo.uol.com.br/bp/excgi/salas_new.cgi?ID=idim_he.conf'</em>
+ou então simplesmente <em>'idim_he.conf'</em>. Os dois são equivalentes.
+Quando você usa <a href="#item_list_subgrp"><code>list_subgrp</code></a> antes de <a href="#item_login"><code>login</code></a>, <code>SUBGRP</code> é salvo e
+utilizado como <code>REF</code> de <a href="#item_login"><code>login</code></a> automaticamente. O método retorna
+um array de hashes se tiver sucesso e <em>()</em> se houver falha. O array
 retornado pode ser expandido com:
-<PRE>
+</dd>
+<dd>
+<pre>
   my @room = $bot-&gt;list_subgrp ('idim_he.conf');
   foreach $room (@room) {
      print $room-&gt;{URL}, &quot;\n&quot;,
            $room-&gt;{Title}, &quot;\n&quot;,
            $room-&gt;{Load}, &quot;\n\n&quot;;
-  }</PRE>
-<P>onde <CODE>URL</CODE> é a URL da sala de bate-papo, <CODE>Title</CODE> é o título dela e
-<CODE>Load</CODE> é o número de pessoas na sala
-(0-40, -1 significa <EM>``sala lotada''</EM>).</P>
-<P></P>
-<DT><STRONG><A NAME="item_search"><CODE>search (STRING)</CODE></A></STRONG><BR>
-<DD>
-Busca por usuário com <CODE>STRING</CODE> contido no nickname em <STRONG>todas</STRONG> as salas. Retorna <EM>()</EM> caso
-nenhum seja encontrado ou <EM>array</EM> semelhante ao do <A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A>:
-<PRE>
+  }</pre>
+</dd>
+<dd>
+<p>onde <code>URL</code> é a URL da sala de bate-papo, <code>Title</code> é o título dela e
+<code>Load</code> é o número de pessoas na sala
+(0-40, -1 significa <em>``sala lotada''</em>).</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_search"><code>search (STRING)</code></a></strong><br />
+</dt>
+<dd>
+Busca por usuário com <code>STRING</code> contido no nickname em <strong>todas</strong> as salas. Retorna <em>()</em> caso
+nenhum seja encontrado ou <em>array</em> semelhante ao do <a href="#item_list_subgrp"><code>list_subgrp</code></a>:
+</dd>
+<dd>
+<pre>
   my @room = $bot-&gt;search ('uolbot');
   foreach $room (@room) {
      print $room-&gt;{Nick}, &quot;\n&quot;,
            $room-&gt;{URL}, &quot;\n&quot;,
            $room-&gt;{Title}, &quot;\n&quot;,
            $room-&gt;{Load}, &quot;\n\n&quot;;
-  }</PRE>
-<P>Onde <EM>Nick</EM> refere o nickname completo do usuário encontrado, <EM>URL</EM> é o endereço da sala onde
-o usuário atualmente se encontra, <EM>Title</EM> é o título da mesma (cortado, foi mal) e <EM>Load</EM> é
-quantidade de pessoas presentes na mesma sala.</P>
-<P></P>
-<DT><STRONG><A NAME="item_brief"><CODE>brief (ROOM)</CODE></A></STRONG><BR>
-<DD>
-``Espia'' na sala sem entrar nela. Retorna <EM>0</EM> se falha. Caso tiver sucesso,
-<OL>
-<LI>
-guarda a lista com nomes de usuários para depois ser vista com <A HREF="#item_users"><CODE>users</CODE></A>
-<P></P>
-<LI>
-passa o fragmento da conversa para rotina definida em <A HREF="#item_Listen_Handler"><CODE>Listen_Handler</CODE></A>
-<P></P>
-<LI>
-retorna <EM>1</EM>
-<P></P></OL>
-<DT><STRONG><A NAME="item_auth"><CODE>auth ([USER, PASS])</CODE></A></STRONG><BR>
-<DD>
+  }</pre>
+</dd>
+<dd>
+<p>Onde <em>Nick</em> refere o nickname completo do usuário encontrado, <em>URL</em> é o endereço da sala onde
+o usuário atualmente se encontra, <em>Title</em> é o título da mesma (cortado, foi mal) e <em>Load</em> é
+quantidade de pessoas presentes na mesma sala.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_brief"><code>brief (ROOM)</code></a></strong><br />
+</dt>
+<dd>
+``Espia'' na sala sem entrar nela. Retorna <em>0</em> se falha. Caso tiver sucesso,
+</dd>
+<ol>
+<li></li>
+guarda a lista com nomes de usuários para depois ser vista com <a href="#item_users"><code>users</code></a>
+<p></p>
+<li></li>
+passa o fragmento da conversa para rotina definida em <a href="#item_listen_handler"><code>Listen_Handler</code></a>
+<p></p>
+<li></li>
+retorna <em>1</em>
+<p></p></ol>
+<dt><strong><a name="item_auth"><code>auth ([USER, PASS])</code></a></strong><br />
+</dt>
+<dd>
 Autentica usuário registrado. Permite entrar nas salas com mais de 30 pessoas e usar
-``carinha'' na frente do nick. <CODE>USER</CODE> é o nome de usuário em forma <EM><A HREF="mailto:'nome@uol.com.br'">'nome@uol.com.br'</A></EM>
-e <CODE>PASS</CODE> é a senha. Agora, o mais velho <EM>hack</EM> de sistema de chat... Omita <CODE>USER</CODE>
-e <CODE>PASS</CODE> e terás todos os privilégios de um usuário registrado sem ser um ;)
-<P>Retorna <EM>0</EM> se houver falha (username/senha inválidos) e <EM>1</EM> se tiver sucesso.</P>
-<P><EM>Obs</EM>: você deve autenticar <STRONG>antes</STRONG> de efetuar <A HREF="#item_login"><CODE>login</CODE></A>!</P>
-<P><EM>Obs2</EM>: <A HREF="#item_auth"><CODE>auth</CODE></A> utiliza conexão encriptada via SSL automaticamente quando o módulo
-<CODE>Crypt::SSLeay</CODE> é encontrado no sistema. Sem esse módulo, a conexão efetuada é
+``carinha'' na frente do nick. <code>USER</code> é o nome de usuário em forma <em><a href="mailto:'nome@uol.com.br'">'nome@uol.com.br'</a></em>
+e <code>PASS</code> é a senha. Agora, o mais velho <em>hack</em> de sistema de chat... Omita <code>USER</code>
+e <code>PASS</code> e terás todos os privilégios de um usuário registrado sem ser um ;)
+</dd>
+<dd>
+<p>Retorna <em>0</em> se houver falha (username/senha inválidos) e <em>1</em> se tiver sucesso.</p>
+</dd>
+<dd>
+<p><em>Obs</em>: você deve autenticar <strong>antes</strong> de efetuar <a href="#item_login"><code>login</code></a>!</p>
+</dd>
+<dd>
+<p><em>Obs2</em>: <a href="#item_auth"><code>auth</code></a> utiliza conexão encriptada via SSL automaticamente quando o módulo
+<code>Crypt::SSLeay</code> é encontrado no sistema. Sem esse módulo, a conexão efetuada é
 insegura e a senha pode ser vista por pessoas mal-intencionadas! Duvido muito,
-mas o que custa fazer direito?!</P>
-<P></P>
-<DT><STRONG><A NAME="item_login"><CODE>login (ROOM [, REF])</CODE></A></STRONG><BR>
-<DD>
-Efetua <EM>login</EM> na sala <CODE>ROOM</CODE> de bate-papo. Chama internamente <EM>imgcode_handler</EM>.
-Parâmetro <CODE>ROOM</CODE> consiste de uma string de formato <CODE>&quot;http://batepapo4.uol.com.br:3999/&quot;</CODE>.
-Se você for preguiçoso como eu, pode usar <CODE>&quot;batepapo4.uol.com.br:3999&quot;</CODE> apenas. Parâmetro
-<CODE>REF</CODE>, opcional, é o <EM>Referer</EM>, o documento que continha o link para
-<CODE>ROOM</CODE>. Se você omitir o <CODE>REF</CODE>, valor
-<EM>'http://batepapo.uol.com.br/bp/excgi/salas_new.shl'</EM>
-será usado automaticamente. Se você estiver usado <A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A> ou <A HREF="#item_search"><CODE>search</CODE></A> antes
-de <A HREF="#item_login"><CODE>login</CODE></A>, a URL de sub-grupo listado será usada como <CODE>REF</CODE>.
-Leia mais sobre <A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A>/<A HREF="#item_search"><CODE>search</CODE></A>.
-<P>Retorna <EM>0</EM> se houver falha e <EM>1</EM> se tiver sucesso. A ``falha'' mais provável
-é que a sala esteja cheia. Utilize o <A HREF="#item_login_error"><CODE>login_error</CODE></A> para obter mais detalhes
-sobre a falha ocorrida.</P>
-<P></P>
-<DT><STRONG><A NAME="item_is_logged"><CODE>is_logged</CODE></A></STRONG><BR>
-<DD>
-Retorna <EM>não-0</EM> se o bot estiver atualmente numa sala de bate-papo e <EM>0</EM> caso contrário.
-<P><EM>Detalhes Técnicos</EM>: Para ser exato, retorna o número de tentativas de efetuar a verificação.</P>
-<P></P>
-<DT><STRONG><A NAME="item_encode"><CODE>encode</CODE></A></STRONG><BR>
-<DD>
+mas o que custa fazer direito?!</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_login"><code>login (ROOM [, REF])</code></a></strong><br />
+</dt>
+<dd>
+Efetua <em>login</em> na sala <code>ROOM</code> de bate-papo. Chama internamente <em>imgcode_handler</em>.
+Parâmetro <code>ROOM</code> consiste de uma string de formato <code>&quot;http://batepapo4.uol.com.br:3999/&quot;</code>.
+Se você for preguiçoso como eu, pode usar <code>&quot;batepapo4.uol.com.br:3999&quot;</code> apenas. Parâmetro
+<code>REF</code>, opcional, é o <em>Referer</em>, o documento que continha o link para
+<code>ROOM</code>. Se você omitir o <code>REF</code>, valor
+<em>'http://batepapo.uol.com.br/bp/excgi/salas_new.shl'</em>
+será usado automaticamente. Se você estiver usado <a href="#item_list_subgrp"><code>list_subgrp</code></a> ou <a href="#item_search"><code>search</code></a> antes
+de <a href="#item_login"><code>login</code></a>, a URL de sub-grupo listado será usada como <code>REF</code>.
+Leia mais sobre <a href="#item_list_subgrp"><code>list_subgrp</code></a>/<a href="#item_search"><code>search</code></a>.
+</dd>
+<dd>
+<p>Retorna <em>0</em> se houver falha e <em>1</em> se tiver sucesso. A ``falha'' mais provável
+é que a sala esteja cheia. Utilize o <a href="#item_login_error"><code>login_error</code></a> para obter mais detalhes
+sobre a falha ocorrida.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_is_logged"><code>is_logged</code></a></strong><br />
+</dt>
+<dd>
+Retorna <em>não-0</em> se o bot estiver atualmente numa sala de bate-papo e <em>0</em> caso contrário.
+</dd>
+<dd>
+<p><em>Detalhes Técnicos</em>: Para ser exato, retorna o número de tentativas de efetuar a verificação.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_encode"><code>encode</code></a></strong><br />
+</dt>
+<dd>
 Retorna a parte ``encriptada'' da URL da última imagem processada contendo código de verificação.
-<P></P>
-<DT><STRONG><A NAME="item_decode"><CODE>decode</CODE></A></STRONG><BR>
-<DD>
+</dd>
+<p></p>
+<dt><strong><a name="item_decode"><code>decode</code></a></strong><br />
+</dt>
+<dd>
 Retorna o código lido.
-<P></P>
-<DT><STRONG><A NAME="item_is_auth"><CODE>is_auth</CODE></A></STRONG><BR>
-<DD>
-Retorna <EM>1</EM> se o bot estiver autenticado como usuário registrado do UOL.
-<P></P>
-<DT><STRONG><A NAME="item_login_error"><CODE>login_error</CODE></A></STRONG><BR>
-<DD>
+</dd>
+<p></p>
+<dt><strong><a name="item_is_auth"><code>is_auth</code></a></strong><br />
+</dt>
+<dd>
+Retorna <em>1</em> se o bot estiver autenticado como usuário registrado do UOL.
+</dd>
+<p></p>
+<dt><strong><a name="item_login_error"><code>login_error</code></a></strong><br />
+</dt>
+<dd>
 Retorna o código do erro durante login:
-<PRE>
+</dd>
+<dd>
+<pre>
   0     - sucesso
   1     - nickname já foi utilizado
   2     - sala está cheia
   3     - código de verificação incorreto
-  undef - erro desconhecido (ver valor de $!)</PRE>
-<P></P>
-<DT><STRONG><A NAME="item_users"><CODE>users</CODE></A></STRONG><BR>
-<DD>
+  undef - erro desconhecido (ver valor de $!)</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_users"><code>users</code></a></strong><br />
+</dt>
+<dd>
 Retorna array de nicknames de usuários atualmente presentes na sala
-de bate-papo. Os dados são atualizados toda vez que você efetua <A HREF="#item_login"><CODE>login</CODE></A>,
-<A HREF="#item_send"><CODE>send</CODE></A> ou <A HREF="#item_brief"><CODE>brief</CODE></A>. Desculpe, não fui eu quem inventou isso... Retorna no mínimo
-o próprio nickname (a sala não está vazia se <EM>você</EM> está lá <CODE>;)</CODE> ou <EM>()</EM>
-no caso de falha. Detalhe: se você usou <A HREF="#item_brief"><CODE>brief</CODE></A>, a sala <STRONG>pode</STRONG> estar vazia
-portando <EM>()</EM> <STRONG>não</STRONG> significa erro.
-<P></P>
-<DT><STRONG><A NAME="item_send"><CODE>send ([MSG] [, ATTR])</CODE></A></STRONG><BR>
-<DD>
-Envia mensagem <CODE>MSG</CODE> para sala de bate-papo. Possui 4 sintaxes:
-<OL>
-<LI>
-<PRE>
- $bot-&gt;send ('mensagem 1');</PRE>
-<P>a mais simples, envia string <EM>'mensagem 1'</EM></P>
-<LI>
-<PRE>
- $bot-&gt;send ('mensagem 2', To =&gt; 'TODOS', Action =&gt; 15);</PRE>
-<P>envia string <EM>'mensagem 2'</EM> com atributos <A HREF="#item_To"><CODE>To</CODE></A> e <A HREF="#item_Action"><CODE>Action</CODE></A> explicados abaixo</P>
-<LI>
-<PRE>
- $bot-&gt;send (Msg =&gt; 'mensagem 3', To =&gt; 'TODOS', Action =&gt; 15);</PRE>
-<P>o mesmo de cima para <EM>'mensagem 3'</EM></P>
-<LI>
-<PRE>
- $bot-&gt;send ();</PRE>
-<P>sintaxe mais obscura, não envia <STRONG>nada</STRONG>, apenas atualiza a lista que
-pode ser obtida com método <A HREF="#item_users"><CODE>users</CODE></A>. De novo, não fui eu quem inventou!</P>
-</OL>
-<P>Agora, sobre atributos <CODE>ATTR</CODE>. São todos opcionais
-(forma <CODE>Chave =&gt; 'Valor'</CODE>), aqui está a lista
-com uma breve explicação:</P>
-<DL>
-<DT><STRONG><A NAME="item_Msg"><EM>Msg</EM></A></STRONG><BR>
-<DD>
-a mensagem em si, string (só pode ser usado com <EM>sintaxe 3</EM>, ignorado na <EM>sintaxe 2</EM>!)
-<P></P>
-<DT><STRONG><A NAME="item_Action"><EM>Action</EM></A></STRONG><BR>
-<DD>
+de bate-papo. Os dados são atualizados toda vez que você efetua <a href="#item_login"><code>login</code></a>,
+<a href="#item_send"><code>send</code></a> ou <a href="#item_brief"><code>brief</code></a>. Desculpe, não fui eu quem inventou isso... Retorna no mínimo
+o próprio nickname (a sala não está vazia se <em>você</em> está lá <code>;)</code> ou <em>()</em>
+no caso de falha. Detalhe: se você usou <a href="#item_brief"><code>brief</code></a>, a sala <strong>pode</strong> estar vazia
+portando <em>()</em> <strong>não</strong> significa erro.
+</dd>
+<p></p>
+<dt><strong><a name="item_send"><code>send ([MSG] [, ATTR])</code></a></strong><br />
+</dt>
+<dd>
+Envia mensagem <code>MSG</code> para sala de bate-papo. Possui 4 sintaxes:
+</dd>
+<ol>
+<li></li>
+<pre>
+ $bot-&gt;send ('mensagem 1');</pre>
+<p>a mais simples, envia string <em>'mensagem 1'</em></p>
+<li></li>
+<pre>
+ $bot-&gt;send ('mensagem 2', To =&gt; 'TODOS', Action =&gt; 15);</pre>
+<p>envia string <em>'mensagem 2'</em> com atributos <a href="#item_to"><code>To</code></a> e <a href="#item_action"><code>Action</code></a> explicados abaixo</p>
+<li></li>
+<pre>
+ $bot-&gt;send (Msg =&gt; 'mensagem 3', To =&gt; 'TODOS', Action =&gt; 15);</pre>
+<p>o mesmo de cima para <em>'mensagem 3'</em></p>
+<li></li>
+<pre>
+ $bot-&gt;send ();</pre>
+<p>sintaxe mais obscura, não envia <strong>nada</strong>, apenas atualiza a lista que
+pode ser obtida com método <a href="#item_users"><code>users</code></a>. De novo, não fui eu quem inventou!</p>
+</ol>
+<p>Agora, sobre atributos <code>ATTR</code>. São todos opcionais
+(forma <code>Chave =&gt; 'Valor'</code>), aqui está a lista
+com uma breve explicação:</p>
+<dl>
+<dt><strong><a name="item_msg"><em>Msg</em></a></strong><br />
+</dt>
+<dd>
+a mensagem em si, string (só pode ser usado com <em>sintaxe 3</em>, ignorado na <em>sintaxe 2</em>!)
+</dd>
+<p></p>
+<dt><strong><a name="item_action"><em>Action</em></a></strong><br />
+</dt>
+<dd>
 ação, valor inteiro. Ações possíveis:
-<PRE>
+</dd>
+<dd>
+<pre>
   0  - fala para (default)
   1  - pergunta para
   2  - responde para
@@ -436,32 +552,50 @@ ação, valor inteiro. Ações possíveis:
   13 - dá um fora em
   14 - briga com
   15 - grita com
-  16 - xinga</PRE>
-<PRE>
+  16 - xinga</pre>
+</dd>
+<dd>
+<pre>
   18 - IGNORAR mensagens de
   19 - só receber mensagens de
-  20 - não IGNORAR mais</PRE>
-<P></P>
-<DT><STRONG><A NAME="item_To"><EM>To</EM></A></STRONG><BR>
-<DD>
-o nickname do receptor da ação <EM>Action</EM>, string. Valor default é <EM>'TODOS'</EM>.
-<P><EM>Obs1</EM>: <STRONG>não necessariamente</STRONG> é alguém que esteja na sala. Isto é, você
-pode fazer:</P>
-<PRE>
-  $bot-&gt;send ('bots do UOL, uní-vos!', To =&gt; 'bots renegados');</PRE>
-<P><STRONG>desde que</STRONG> <EM>não</EM> seja uma mensagem reservada (<CODE>Reserved =&gt; 1</CODE>)!</P>
-<P><EM>Obs2</EM>: independentemente do valor do <EM>To</EM>, todos os usuários da sala
-irão ler a mensagem. Para mensagens privadas, use <EM>Reserved</EM>.</P>
-<P></P>
-<DT><STRONG><A NAME="item_Reserved"><EM>Reserved</EM></A></STRONG><BR>
-<DD>
-pode ser <EM>1</EM> ou <EM>0</EM>. Quando <EM>1</EM>, a mensagem é enviada reservadamente
-para nickname <EM>To</EM>. Valor default é <EM>0</EM>.
-<P></P>
-<DT><STRONG><A NAME="item_Sound"><EM>Sound</EM></A></STRONG><BR>
-<DD>
+  20 - não IGNORAR mais</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_to"><em>To</em></a></strong><br />
+</dt>
+<dd>
+o nickname do receptor da ação <em>Action</em>, string. Valor default é <em>'TODOS'</em>.
+</dd>
+<dd>
+<p><em>Obs1</em>: <strong>não necessariamente</strong> é alguém que esteja na sala. Isto é, você
+pode fazer:</p>
+</dd>
+<dd>
+<pre>
+  $bot-&gt;send ('bots do UOL, uní-vos!', To =&gt; 'bots renegados');</pre>
+</dd>
+<dd>
+<p><strong>desde que</strong> <em>não</em> seja uma mensagem reservada (<code>Reserved =&gt; 1</code>)!</p>
+</dd>
+<dd>
+<p><em>Obs2</em>: independentemente do valor do <em>To</em>, todos os usuários da sala
+irão ler a mensagem. Para mensagens privadas, use <em>Reserved</em>.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_reserved"><em>Reserved</em></a></strong><br />
+</dt>
+<dd>
+pode ser <em>1</em> ou <em>0</em>. Quando <em>1</em>, a mensagem é enviada reservadamente
+para nickname <em>To</em>. Valor default é <em>0</em>.
+</dd>
+<p></p>
+<dt><strong><a name="item_sound"><em>Sound</em></a></strong><br />
+</dt>
+<dd>
 som a ser enviado, inteiro. Sons possíveis:
-<PRE>
+</dd>
+<dd>
+<pre>
   0  - nenhum (default)
   14 - Ahn???
   15 - Bang!
@@ -477,12 +611,16 @@ som a ser enviado, inteiro. Sons possíveis:
   25 - Tôlôca
   26 - Tosse
   07 - Como é?
-  08 - Não entendi</PRE>
-<P></P>
-<DT><STRONG><A NAME="item_Icon"><EM>Icon</EM></A></STRONG><BR>
-<DD>
+  08 - Não entendi</pre>
+</dd>
+<p></p>
+<dt><strong><a name="item_icon"><em>Icon</em></a></strong><br />
+</dt>
+<dd>
 ícone a ser enviado, inteiro. Ícones possíveis:
-<PRE>
+</dd>
+<dd>
+<pre>
   0  - nenhum (default)
   38 - Assustado
   27 - Bocejo
@@ -500,193 +638,227 @@ som a ser enviado, inteiro. Sons possíveis:
   37 - Raiva
   19 - Smack!
   21 - Sorriso
-  26 - Zangado</PRE>
-<P></P></DL>
-<P>Retorna <EM>0</EM> se houver falha e <EM>1</EM> se tiver sucesso.</P>
-<P><EM>Obs</EM>: <STRONG>aparentemente</STRONG> o servidor não aceita mensagens &gt; 200 bytes.</P>
-<DT><STRONG><A NAME="item_scroll"><CODE>scroll (TIMEOUT)</CODE></A></STRONG><BR>
-<DD>
-<EM>Obs</EM>: Provavelmente a parte mais chatinha... Mas indispensável se você
-quer comunicação <STRONG>bidirecional</STRONG>, isto é, o seu bot envia <STRONG>E</STRONG> recebe dados.
-<P>O <A HREF="#item_scroll"><CODE>scroll</CODE></A> visa limpar buffers de entrada e enviar dados para sub-rotina
-definida em <A HREF="#item_Listen_Handler"><CODE>Listen_Handler</CODE></A> (leia mais sobre argumentos de <A HREF="#item_new"><CODE>new</CODE></A>). Se o
-<EM>listen_handler</EM> for omitido então os buffers serão limpos e a rotina
-retornará sucesso (<EM>1</EM>). Só retorna <EM>0</EM> se houver quebra inesperada
-de conexão.</P>
-<P>O parâmetro <CODE>TIMEOUT</CODE> é o tempo que o <A HREF="#item_scroll"><CODE>scroll</CODE></A> deva esperar até
+  26 - Zangado</pre>
+</dd>
+<p></p></dl>
+<p>Retorna <em>0</em> se houver falha e <em>1</em> se tiver sucesso.</p>
+<p><em>Obs</em>: <strong>aparentemente</strong> o servidor não aceita mensagens &gt; 200 bytes.</p>
+<dt><strong><a name="item_scroll"><code>scroll (TIMEOUT)</code></a></strong><br />
+</dt>
+<dd>
+<em>Obs</em>: Provavelmente a parte mais chatinha... Mas indispensável se você
+quer comunicação <strong>bidirecional</strong>, isto é, o seu bot envia <strong>E</strong> recebe dados.
+</dd>
+<dd>
+<p>O <a href="#item_scroll"><code>scroll</code></a> visa limpar buffers de entrada e enviar dados para sub-rotina
+definida em <a href="#item_listen_handler"><code>Listen_Handler</code></a> (leia mais sobre argumentos de <a href="#item_new"><code>new</code></a>). Se o
+<em>listen_handler</em> for omitido então os buffers serão limpos e a rotina
+retornará sucesso (<em>1</em>). Só retorna <em>0</em> se houver quebra inesperada
+de conexão.</p>
+</dd>
+<dd>
+<p>O parâmetro <code>TIMEOUT</code> é o tempo que o <a href="#item_scroll"><code>scroll</code></a> deva esperar até
 retornar caso o buffer esteja vazio, em segundos. Resumindo,
-<A HREF="#item_scroll"><CODE>scroll()</CODE></A> ou <A HREF="#item_scroll"><CODE>scroll(0)</CODE></A> retorna imediatamente (timeout 0).
-<A HREF="#item_scroll"><CODE>scroll(10)</CODE></A> aguarda 10 segundos pelo dado. <A HREF="#item_scroll"><CODE>scroll(-1)</CODE></A> pausa o programa
-até que um dado apareça no buffer.</P>
-<P>O <A HREF="#item_scroll"><CODE>scroll</CODE></A> é chamado automaticamente pelos métodos <A HREF="#item_login"><CODE>login</CODE></A>, <A HREF="#item_logout"><CODE>logout</CODE></A>
-e <A HREF="#item_send"><CODE>send</CODE></A>, portando, não há como o seu <A HREF="#item_Listen_Handler"><CODE>Listen_Handler</CODE></A> perder algum dado.
-Porém, se você quiser mais controle, rode um <A HREF="#item_scroll"><CODE>scroll</CODE></A> com <EM>timeout</EM>
-razoável sempre que estiver esperando alguma resposta do servidor.</P>
-<P><EM>Obs</EM>: Alguém aí pensou <EM>fork</EM>? Acredite em mim, <STRONG>não</STRONG> vale a pena!
-Eu <EM>comecei</EM> a desenvolver bot bifurcado, com um <EM>child</EM> para entrada
-(rodando só <CODE>while ($bot-&gt;scroll(-1)) { ... }</CODE>) e outro para saída
-(rodando <A HREF="#item_send"><CODE>$bot-&gt;send(...)</CODE></A>). A sincronização dos dois virou um inferno e o
-<EM>ActivePerl</EM>, meu plataforma principal, não era muito amigo do <EM>fork</EM>.
+<a href="#item_scroll"><code>scroll()</code></a> ou <a href="#item_scroll"><code>scroll(0)</code></a> retorna imediatamente (timeout 0).
+<a href="#item_scroll"><code>scroll(10)</code></a> aguarda 10 segundos pelo dado. <a href="#item_scroll"><code>scroll(-1)</code></a> pausa o programa
+até que um dado apareça no buffer.</p>
+</dd>
+<dd>
+<p>O <a href="#item_scroll"><code>scroll</code></a> é chamado automaticamente pelos métodos <a href="#item_login"><code>login</code></a>, <a href="#item_logout"><code>logout</code></a>
+e <a href="#item_send"><code>send</code></a>, portando, não há como o seu <a href="#item_listen_handler"><code>Listen_Handler</code></a> perder algum dado.
+Porém, se você quiser mais controle, rode um <a href="#item_scroll"><code>scroll</code></a> com <em>timeout</em>
+razoável sempre que estiver esperando alguma resposta do servidor.</p>
+</dd>
+<dd>
+<p><em>Obs</em>: Alguém aí pensou <em>fork</em>? Acredite em mim, <strong>não</strong> vale a pena!
+Eu <em>comecei</em> a desenvolver bot bifurcado, com um <em>child</em> para entrada
+(rodando só <code>while ($bot-&gt;scroll(-1)) { ... }</code>) e outro para saída
+(rodando <a href="#item_send"><code>$bot-&gt;send(...)</code></a>). A sincronização dos dois virou um inferno e o
+<em>ActivePerl</em>, meu plataforma principal, não era muito amigo do <em>fork</em>.
 Se você pensar um pouco, verá que o problema em questão é totalmente
 linear, nunca duas ações são feitas em paralelo. Agora, se você estiver
-usando plataforma <EM>UNIX</EM> e não quiser se preocupar onde pôr o <A HREF="#item_scroll"><CODE>scroll</CODE></A>,
-coloque antes do <A HREF="#item_login"><CODE>login</CODE></A>:</P>
-<PRE>
+usando plataforma <em>UNIX</em> e não quiser se preocupar onde pôr o <a href="#item_scroll"><code>scroll</code></a>,
+coloque antes do <a href="#item_login"><code>login</code></a>:</p>
+</dd>
+<dd>
+<pre>
   $SIG{ALRM} = sub { $bot-&gt;scroll; alarm 1 };
-  alarm 1;</PRE>
-<P>Se você está vendo essa técnica pela 1-a vez, conforme-se com o que já tem.</P>
-<P></P>
-<DT><STRONG><A NAME="item_logout"><CODE>logout</CODE></A></STRONG><BR>
-<DD>
-Efetua <EM>logout</EM> da sala de bate-papo. Retorna <EM>0</EM> se houver falha e
-<EM>1</EM> se tiver sucesso.
-<P></P></DL>
-<P>
-<HR>
-<H1><A NAME="bugs">BUGS</A></H1>
-<P>Testei rigorosamente esse módulo, afinal por que a idéia é que um <STRONG>bot</STRONG>
-rode 24 horas por dia 7 dias por semana <EM>sem manutenção</EM>.</P>
-<P>Porém sempre há coisas que não planejamos afinal, tais como:</P>
-<UL>
-<LI>
+  alarm 1;</pre>
+</dd>
+<dd>
+<p>Se você está vendo essa técnica pela 1-a vez, conforme-se com o que já tem.</p>
+</dd>
+<p></p>
+<dt><strong><a name="item_logout"><code>logout</code></a></strong><br />
+</dt>
+<dd>
+Efetua <em>logout</em> da sala de bate-papo. Retorna <em>0</em> se houver falha e
+<em>1</em> se tiver sucesso.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="bugs">BUGS</a></h1>
+<p>Testei rigorosamente esse módulo, afinal por que a idéia é que um <strong>bot</strong>
+rode 24 horas por dia 7 dias por semana <em>sem manutenção</em>.</p>
+<p>Porém sempre há coisas que não planejamos afinal, tais como:</p>
+<ul>
+<li></li>
 organização estranha de módulos/métodos
-<P>É resultado dificilmente evitável do progresso do <CODE>UOLbot</CODE>. Começa-se
+<p>É resultado dificilmente evitável do progresso do <code>UOLbot</code>. Começa-se
 de um jeito, aí muda-se de idéia e termina de um jeito totalmente diferente.
 Com certeza você deve estar se perguntando algo do tipo: ``mas para quê dar
-um <EM>nick</EM> à instância que vai apenas checkar a sala?'' ou então: ``não seria
-mais fácil encapsular o endereço da sala em <CODE>HTTP::Request</CODE> por exemplo, 
+um <em>nick</em> à instância que vai apenas checkar a sala?'' ou então: ``não seria
+mais fácil encapsular o endereço da sala em <code>HTTP::Request</code> por exemplo, 
 afinal vira e mexe aparece URL de um jeito ou de outro!''. A pergunta é:
-a <STRONG>funcionalidade</STRONG> é prejudicada? Caso contrário, para que perder tempo
-arrumando coisa insignificante, afinal, não é um código <STRONG>para massas</STRONG> ;)</P>
-<P></P>
-<LI>
-incompatibilidade com <CODE>Win32</CODE>
-<P>Calma, calma, você <STRONG>pode</STRONG> executar o <CODE>UOLbot</CODE> num plataforma <CODE>Win32</CODE>.
-O grande inconveniente é eu não ter o <EM>port</EM> do <CODE>jocr</CODE> necessário e
-biblioteca <CODE>Image::Magick</CODE> para testar funções <EM>OCR</EM>...
-Aliás, vi que <EM>as vezes</EM> há falhas muito estranhas no <CODE>LWP</CODE>. Uma hora
+a <strong>funcionalidade</strong> é prejudicada? Caso contrário, para que perder tempo
+arrumando coisa insignificante, afinal, não é um código <strong>para massas</strong> ;)</p>
+<p></p>
+<li></li>
+incompatibilidade com <code>Win32</code>
+<p>Calma, calma, você <strong>pode</strong> executar o <code>UOLbot</code> num plataforma <code>Win32</code>.
+O grande inconveniente é eu não ter o <em>port</em> do <code>jocr</code> necessário e
+biblioteca <code>Image::Magick</code> para testar funções <em>OCR</em>...
+Aliás, vi que <em>as vezes</em> há falhas muito estranhas no <code>LWP</code>. Uma hora
 tá tudo OK, outra hora não funciona. Eu fiz testes com
-<CODE>ActivePerl 5.6.1 Build 632</CODE>, utilizando <CODE>Windows 98</CODE>, <CODE>Windows 98 SE</CODE>
-e <CODE>Windows XP Professional</CODE>.
+<code>ActivePerl 5.6.1 Build 632</code>, utilizando <code>Windows 98</code>, <code>Windows 98 SE</code>
+e <code>Windows XP Professional</code>.
 O primeiro e o terceiro não apresentaram falhas, o segundo apresentou raramente. Mas
-na minha opinião pessoal, eu não confiaria em <STRONG>nada</STRONG> feito pela <EM>Micro$oft</EM>.
+na minha opinião pessoal, eu não confiaria em <strong>nada</strong> feito pela <em>Micro$oft</em>.
 Não confiaria nem nos softwares livres rodando em cima de produtos da
-<EM>Micro$oft</EM>. Portando, aqui vai uma dica que vai te livrar de muitos problemas:
-<STRONG>use Linux</STRONG>.</P>
-<P></P>
-<LI>
+<em>Micro$oft</em>. Portando, aqui vai uma dica que vai te livrar de muitos problemas:
+<strong>use Linux</strong>.</p>
+<p></p>
+<li></li>
 tolerância à falhas humanas
-<P>O mínimo esperado do usuário é que passe parâmetros corretos; não passe
+<p>O mínimo esperado do usuário é que passe parâmetros corretos; não passe
 string onde um número é esperado e nem passe expressão regular onde era
-para pôr referência ao código...</P>
-<P>Ainda assim, fiz o necessário para proteger o usuário contra dar um
-<A HREF="#item_logout"><CODE>logout</CODE></A> antes que seja feito um <A HREF="#item_login"><CODE>login</CODE></A>, portanto não se desanime.</P>
-<P></P>
-<LI>
+para pôr referência ao código...</p>
+<p>Ainda assim, fiz o necessário para proteger o usuário contra dar um
+<a href="#item_logout"><code>logout</code></a> antes que seja feito um <a href="#item_login"><code>login</code></a>, portanto não se desanime.</p>
+<p></p>
+<li></li>
 utilizar um proxy HTTP
-<P>Grande maioria dos proxies públicos (os normalmente utilizados para anonimizar
-acessos) não deixa conectar nas portas não-HTTP. <STRONG>Nenhuma</STRONG> das salas de bate-papo
-reside na porta HTTP (80). E então?</P>
-<P></P></UL>
-<P>Outra coisa... Olha a data desse arquivo. <STRONG>Nessa</STRONG> data <CODE>UOLbot</CODE> estava
+<p>Grande maioria dos proxies públicos (os normalmente utilizados para anonimizar
+acessos) não deixa conectar nas portas não-HTTP. <strong>Nenhuma</strong> das salas de bate-papo
+reside na porta HTTP (80). E então?</p>
+<p></p></ul>
+<p>Outra coisa... Olha a data desse arquivo. <strong>Nessa</strong> data <code>UOLbot</code> estava
 funcionando, pode ter certeza. Se não está agora, é porque pessoal do UOL
 alterou o sistema de webchat. Sinto muitíssimo... O que você tem a fazer é
-ou procurar versão mais atual de <CODE>UOLbot</CODE> ou adaptar o código desse aqui.
+ou procurar versão mais atual de <code>UOLbot</code> ou adaptar o código desse aqui.
 Não deve ser difícil, fiz código o mais claro e limpo que pude, até comentei
-tudo (ôôô)!</P>
-<P>O mesmo se aplica a qualquer valor ou tabela citados aqui. O UOL muda
-constantemente o seu sistema de webchat, fazer o quê...</P>
-<P>
-<HR>
-<H1><A NAME="referências">REFERÊNCIAS</A></H1>
-<UL>
-<LI>
-<EM>LWP</EM> - Library for WWW access in Perl
-<P></P></UL>
-<P>Vários exemplos distribuídos junto com o módulo:</P>
-<DL>
-<DT><STRONG><A NAME="item_simples%2Epl"><EM>simples.pl</EM></A></STRONG><BR>
-<DD>
+tudo (ôôô)!</p>
+<p>O mesmo se aplica a qualquer valor ou tabela citados aqui. O UOL muda
+constantemente o seu sistema de webchat, fazer o quê...</p>
+<p>
+</p>
+<hr />
+<h1><a name="referências">REFERÊNCIAS</a></h1>
+<ul>
+<li></li>
+<em>LWP</em> - Library for WWW access in Perl
+<p></p></ul>
+<p>Vários exemplos distribuídos junto com o módulo:</p>
+<dl>
+<dt><strong><a name="item_simples%2epl"><em>simples.pl</em></a></strong><br />
+</dt>
+<dd>
 a aplicação mais simples; listar um sub-grupo, entrar na sala #15,
 repetir mensagem 5 vezes, sair.
-<P></P>
-<DT><STRONG><A NAME="item_crawler%2Epl"><EM>crawler.pl</EM></A></STRONG><BR>
-<DD>
+</dd>
+<p></p>
+<dt><strong><a name="item_crawler%2epl"><em>crawler.pl</em></a></strong><br />
+</dt>
+<dd>
 bot de propaganda; entra em todas as salas nos sub-grupos especificados
 e deixa uma mensagem.
-<P></P>
-<DT><STRONG><A NAME="item_list%2Epl"><EM>list.pl</EM></A></STRONG><BR>
-<DD>
+</dd>
+<p></p>
+<dt><strong><a name="item_list%2epl"><em>list.pl</em></a></strong><br />
+</dt>
+<dd>
 busca em sub-grupos especificados e retorna lista de URLs de salas
 de bate-papo e seus respectivos títulos.
-<P></P></DL>
-<P>
-<HR>
-<H1><A NAME="versão">VERSÃO</A></H1>
-<P>2.0</P>
-<P>
-<HR>
-<H1><A NAME="histórico">HISTÓRICO</A></H1>
-<UL>
-<LI>
-<STRONG>1.0</STRONG> <EM>(25/Jan/2002)</EM> - primeira versão funcional.
-<P></P>
-<LI>
-<STRONG>1.1</STRONG> <EM>(09/Fev/2002)</EM> - utilizado o <CODE>Carp::croak</CODE> para erros de usuário e
-adicionado o método <A HREF="#item_brief"><CODE>brief</CODE></A>. Correções menores na documentação.
-<P></P>
-<LI>
-<STRONG>1.2</STRONG> <EM>(03/Mar/2002)</EM> - adicionados métodos <A HREF="#item_auth"><CODE>auth</CODE></A> e <A HREF="#item_avatar"><CODE>avatar</CODE></A> (para tirar
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="versão">VERSÃO</a></h1>
+<p>2.01</p>
+<p>
+</p>
+<hr />
+<h1><a name="histórico">HISTÓRICO</a></h1>
+<ul>
+<li></li>
+<strong>1.0</strong> <em>(25/Jan/2002)</em> - primeira versão funcional.
+<p></p>
+<li></li>
+<strong>1.1</strong> <em>(09/Fev/2002)</em> - utilizado o <code>Carp::croak</code> para erros de usuário e
+adicionado o método <a href="#item_brief"><code>brief</code></a>. Correções menores na documentação.
+<p></p>
+<li></li>
+<strong>1.2</strong> <em>(03/Mar/2002)</em> - adicionados métodos <a href="#item_auth"><code>auth</code></a> e <a href="#item_avatar"><code>avatar</code></a> (para tirar
 proveito de ser usuário registrado do UOL ;).
-<P></P>
-<LI>
-<STRONG>1.2a</STRONG> <EM>(04/Mar/2002)</EM> - atualizações na documentação.
-<P></P>
-<LI>
-<STRONG>1.3</STRONG> <EM>(27/Mar/2002)</EM> - reestruturado o processo de login devido às alterações
-feitas nos servidores do UOL. Agora você deve dar um <CODE>join</CODE> na sala escolhida,
-obter o código de verificação e completar operação com <A HREF="#item_login"><CODE>login</CODE></A>. Maldição!
-<P></P>
-<LI>
-<STRONG>1.4</STRONG> <EM>(22/Jul/2002)</EM> - Código levemente reestruturado para compatibilidade com
-módulo <EM>OCR</EM> (para reconhecimento do código de verificação) que estou fazendo.
+<p></p>
+<li></li>
+<strong>1.2a</strong> <em>(04/Mar/2002)</em> - atualizações na documentação.
+<p></p>
+<li></li>
+<strong>1.3</strong> <em>(27/Mar/2002)</em> - reestruturado o processo de login devido às alterações
+feitas nos servidores do UOL. Agora você deve dar um <code>join</code> na sala escolhida,
+obter o código de verificação e completar operação com <a href="#item_login"><code>login</code></a>. Maldição!
+<p></p>
+<li></li>
+<strong>1.4</strong> <em>(22/Jul/2002)</em> - Código levemente reestruturado para compatibilidade com
+módulo <em>OCR</em> (para reconhecimento do código de verificação) que estou fazendo.
 Algumas correções menores também.
-<P></P>
-<LI>
-<STRONG>2.0</STRONG> <EM>(04/Ago/2002)</EM> - Código fortemente reestruturado. Muitas mudanças.
-Módulo <CODE>UOL::OCR</CODE> incluído.
-<P></P></UL>
-<P>
-<HR>
-<H1><A NAME="copyright">COPYRIGHT</A></H1>
-<PRE>
-  Copyright (C) por Stanislaw Y. Pusep, Janeiro de 2002</PRE>
-<OL>
-<LI>
-A utilização desse <EM>módulo</EM>, assim como distribuição do <EM>módulo</EM> e/ou
-suas <EM>versões</EM> (alterações feitas no <EM>módulo</EM> por terceiros) somente
-deve ser feita com autorização explicita proveniente do <EM>autor</EM>.
-<P></P>
-<LI>
-Aqueles que tem cópia autorizada do <EM>módulo</EM> tem o direito de gerar
-<EM>versões</EM> (alterar o <EM>módulo</EM> conforme for conveniente a eles). <STRONG><A HREF="#item_%28%2A%29"><CODE>(*)</CODE></A></STRONG>
-<P></P>
-<LI>
-Qualquer programa feito com utilização desse <EM>módulo</EM> pode ser usado
-para quaisquer fins (inclusive lucrativos). <STRONG><A HREF="#item_%28%2A%29"><CODE>(*)</CODE></A></STRONG>
-<P></P></OL>
-<DL>
-<DT><STRONG><A NAME="item_%28%2A%29"><STRONG><CODE>(*)</CODE></STRONG></A></STRONG><BR>
-<DD>
-Desde que não haja infração do <CODE>item 1</CODE>.
-<P></P></DL>
-<P>
-<HR>
-<H1><A NAME="autor">AUTOR</A></H1>
-<P>Nome: Stanislaw Y. Pusep</P>
-<P>E-Mail: stanis <EM>AT</EM> linuxmail <EM>DOT</EM> org</P>
-<P>Homepage: <A HREF="http://sysdlabs.hypermart.net/">http://sysdlabs.hypermart.net/</A></P>
+<p></p>
+<li></li>
+<strong>2.0</strong> <em>(04/Ago/2002)</em> - Código fortemente reestruturado. Muitas mudanças.
+Módulo <code>UOL::OCR</code> incluído.
+<p></p>
+<li></li>
+<strong>2.01</strong> <em>(06/Dez/2002)</em> - Correção menor devido à atualização de protocolo nos servidores do UOL.
+<p></p></ul>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<pre>
+  Copyright (C) por Stanislaw Y. Pusep, Janeiro de 2002</pre>
+<ol>
+<li></li>
+A utilização desse <em>módulo</em>, assim como distribuição do <em>módulo</em> e/ou
+suas <em>versões</em> (alterações feitas no <em>módulo</em> por terceiros) somente
+deve ser feita com autorização explicita proveniente do <em>autor</em>.
+<p></p>
+<li></li>
+Aqueles que tem cópia autorizada do <em>módulo</em> tem o direito de gerar
+<em>versões</em> (alterar o <em>módulo</em> conforme for conveniente a eles). <strong><a href="#item_%28%2a%29"><code>(*)</code></a></strong>
+<p></p>
+<li></li>
+Qualquer programa feito com utilização desse <em>módulo</em> pode ser usado
+para quaisquer fins (inclusive lucrativos). <strong><a href="#item_%28%2a%29"><code>(*)</code></a></strong>
+<p></p></ol>
+<dl>
+<dt><strong><a name="item_%28%2a%29"><strong><code>(*)</code></strong></a></strong><br />
+</dt>
+<dd>
+Desde que não haja infração do <code>item 1</code>.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="autor">AUTOR</a></h1>
+<p>Nome: Stanislaw Y. Pusep</p>
+<p>E-Mail: stanis <em>AT</em> linuxmail <em>DOT</em> org</p>
+<p>Homepage: <a href="http://sysdlabs.hypermart.net/">http://sysdlabs.hypermart.net/</a></p>
 
-</BODY>
+</body>
 
-</HTML>
+</html>
