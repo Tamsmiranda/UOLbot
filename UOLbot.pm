@@ -101,18 +101,11 @@ Quando você "falou" tudo o que quis, tchau para todos!
 
 Isso é o básico. Se não entendeu, pare por aqui.
 
-
-=head1 MÉTODOS
-
-Os métodos do C<UOLbot> são:
-
-=over 4
-
 =cut
 
 
 use vars qw(@ISA $VERSION $entry $bufsize $CRLF);
-$VERSION = "1.1";
+$VERSION = "1.2a";
 
 # define constantes
 $entry		= 'http://batepapo.uol.com.br/bp/excgi/salas_new.shl';
@@ -136,6 +129,10 @@ use LWP::UserAgent;
    MaxHeaderLines	=> 0,
 );
 
+
+=head1 CONSTRUTOR
+
+=over 4
 
 =item C<new ([ARGS])>
 
@@ -174,6 +171,14 @@ I<Obs>: valores possíveis são:
   5 - Cinza
   6 - Roxo
 
+=item I<Avatar>
+
+define "carinha" na frente do nick (número inteiro, para ser descoberto na tentativa e erro :(
+
+I<Obs>: a "carinha" só vai aparecer se você for autenticado com C<auth>!
+
+I<Obs2>: pra tirar a "carinha" já definida, chame C<$bot-E<gt>avatar (-1)>.
+
 =item I<Listen_Handler>
 
 referência para o código que vai processar as
@@ -197,6 +202,8 @@ Nesse caso, variável I<$data> recebe pacotes com código HTML recebidos.
 
 I<Obs>: lembre que nem sempre há uma mensagem em um pacote. O servidor
 (ou buffer do sistema operacional) pode juntar vários pacotes num só.
+
+=back
 
 =back
 
@@ -237,6 +244,7 @@ sub new {
 
    $self->{users}	= [];
    $self->{logged}	= 0;
+   $self->{auth}	= 0;
 
    $self->{cookies}	= new HTTP::Cookies;
    $self->{header}	= new HTTP::Headers;
@@ -248,11 +256,38 @@ sub new {
 
    $self->{ua}->cookie_jar ($self->{cookies});
 
+   if (defined $self->{avatar}) {
+      $self->avatar ($self->{avatar});
+   }
+
 
    # feito!
    return $self;
 }
 
+
+=head1 MÉTODOS
+
+Os métodos do C<UOLbot> são:
+
+=over 4
+
+=item C<ua>
+
+=item C<nick>
+
+=item C<color>
+
+=item C<avatar>
+
+=item C<listen_handler>
+
+Métodos para ler/definir os parâmetros definidos pelo C<new>.
+
+I<Obs>: Você pode ler os valores a qualquer momento, mas só poderá
+definir quando a instância I<não estiver logada> com C<login>!
+
+=cut
 
 # métodos para acesso aos parâmetros internos...
 sub getset {
@@ -279,24 +314,19 @@ sub nick {
 sub color {
    shift->getset ('color',		@_);
 }
+sub avatar {
+   my $self = shift;
+   my $r = $self->getset ('avatar',		@_);
+   my $avatar = shift;
+   $self->{cookies}->set_cookie (undef, 'AVATARCHAT', $avatar, '/', '.uol.com.br');
+   if ($avatar == -1) {
+      delete $self->{avatar};
+   }
+   return $r;
+}
 sub listen_handler {
    shift->getset ('listen_handler',	@_);
 }
-
-=item C<ua>
-
-=item C<nick>
-
-=item C<color>
-
-=item C<listen_handler>
-
-Métodos para ler/definir os parâmetros definidos pelo C<new>.
-
-I<Obs>: Você pode ler os valores a qualquer momento, mas só poderá
-definir quando a instância I<não estiver logada> com C<login>!
-
-=cut
 
 
 =item C<list_subgrp (SUBGRP)>
@@ -438,6 +468,72 @@ sub brief {
 }
 
 
+=item C<auth (USER, PASS)>
+
+Autentica usuário registrado. Permite entrar nas salas com mais de 30 pessoas e usar
+"carinha" na frente do nick. C<USER> é o nome de usuário em forma I<'nome@uol.com.br'>
+e C<PASS> é a senha.
+
+Retorna I<0> se houver falha (username/senha inválidos) e I<1> se tiver sucesso.
+
+I<Obs>: você deve autenticar B<antes> de efetuar C<login>!
+
+I<Obs2>: C<auth> utiliza conexão encriptada via SSL automaticamente quando o módulo
+C<Crypt::SSLeay> é encontrado no sistema. Sem esse módulo, a conexão efetuada é
+insegura e a senha pode ser vista por pessoas mal-intencionadas!
+
+=cut
+
+sub auth {
+   my ($self, $user, $pass) = @_;
+
+   # tolera erro bobo
+   return 0 if $self->is_logged;
+
+   # decide se usa HTTP ou HTTPS
+   my $url = $self->{ua}->is_protocol_supported ('https') ? 'https' : 'http';
+   $url .= '://gasset.uol.com.br/pls/dadias/login_conteudo3';
+   my $targ = 'http://batepapo.uol.com.br/bp/troca.htm';
+   my $targf = &ief ($targ);
+
+   # faz pedido
+   my $req = $self->{ua}->request (HTTP::Request->new (GET => $url.'?URL='.$targ, $self->{header}));
+   return 0 unless $req->is_success;
+
+
+   # lê chave de sessão
+   $req->content =~ /"p_chave" value="(.*?)"/s ||
+      croak "auth: servidor enviou resposta inválida (chave não encontrada)";
+   my $key = $1;
+
+   # lê identificador de sessão
+   $req->content =~ /"p_id_acesso" value="(.*?)"/s ||
+      croak "auth: servidor enviou resposta inválida (identificador não encontrado)";
+   my $id = $1;
+
+
+   # autentica com valores de "id" e "chave" obtidos
+   $req = HTTP::Request->new (POST => $url.'_3', $self->reref ($url));
+   # monta conteudo
+   my $content = "password=$pass&controle=Entrar&Target_URL=$targf&cod_produto=&p_chave=$key&username=$user&p_id_acesso=$id";
+   $req->header ('Content-Type', 'application/x-www-form-urlencoded');
+   $req->header ('Content-Length', length $content);
+   $req->content ($content);
+
+   # faz pedido
+   #LWP::Debug::level ('+');
+   my $ret = $self->{ua}->simple_request ($req);
+   #LWP::Debug::level ('-');
+   return 0 unless $ret->is_success;
+
+   # temos o cookie autenticado?
+   my $OK = 0;
+   $self->{cookies}->scan (sub { $OK = 1 if $_[1] eq 'UOL_ID' });
+
+   return $self->{auth} = $OK;
+}
+
+
 =item C<login (ROOM [, REF])>
 
 Efetua I<login> na sala C<ROOM> de bate-papo. Parâmetro C<ROOM> consiste
@@ -486,6 +582,17 @@ Retorna I<1> se o bot estiver atualmente numa sala de bate-papo e I<0> caso cont
 sub is_logged {
    my $self = shift;
    return (defined $self->{logged} && $self->{logged}) ? 1 : 0;
+}
+
+
+=item C<is_auth>
+
+Retorna I<1> se o bot estiver autenticado como usuário registrado da UOL.
+
+=cut
+
+sub is_auth {
+   return shift->{auth};
 }
 
 
@@ -1102,12 +1209,6 @@ C<logout> antes que seja feito um C<login>, portanto não se desanime.
 
 =item *
 
-"caretas" na frente do nick
-
-Precisa ser assinante para usar tal artefato inútil. Duvido que um bot assine UOL!
-
-=item *
-
 utilizar um proxy HTTP
 
 Grande maioria dos proxies públicos (os normalmente utilizados para anonimizar
@@ -1165,7 +1266,7 @@ de bate-papo e seus respectivos títulos.
 
 =head1 VERSÃO
 
-1.1
+1.2a
 
 =cut
 
@@ -1176,12 +1277,21 @@ de bate-papo e seus respectivos títulos.
 
 =item *
 
-B<1.0> I<(25/Jan/2002)> - primeira versão funcional
+B<1.0> I<(25/Jan/2002)> - primeira versão funcional.
 
 =item *
 
 B<1.1> I<(09/Fev/2002)> - utilizado o C<Carp::croak> para erros de usuário e
 adicionado o método C<brief>. Correções menores na documentação.
+
+=item *
+
+B<1.2> I<(03/Mar/2002)> - adicionados métodos C<auth> e C<avatar> (para tirar
+proveito de ser usuário registrado da UOL ;).
+
+=item *
+
+B<1.2a> I<(04/Mar/2002)> - atualizações na documentação.
 
 =back
 

@@ -20,6 +20,10 @@ my $bot = new UOLbot (
    Nick			=> 'teste',
 );
 
+# autentica usuário registrado
+#$bot->auth ('****@uol.com.br', '********') || die "can't auth(): $!";
+
+
 # lista sub-grupo 'São Paulo Interior'
 my @rooms = $bot->list_subgrp ('idspin5.conf');
 die "can't list_subgrp(): $!" unless @rooms;

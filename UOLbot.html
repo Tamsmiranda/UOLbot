@@ -16,6 +16,7 @@
 	<LI><A HREF="#resumo">RESUMO</A></LI>
 	<LI><A HREF="#descrição">DESCRIÇÃO</A></LI>
 	<LI><A HREF="#introdução">INTRODUÇÃO</A></LI>
+	<LI><A HREF="#construtor">CONSTRUTOR</A></LI>
 	<LI><A HREF="#métodos">MÉTODOS</A></LI>
 	<LI><A HREF="#bugs">BUGS</A></LI>
 	<LI><A HREF="#referências">REFERÊNCIAS</A></LI>
@@ -110,8 +111,7 @@ Sem comentários aqui.</P>
 <P>Isso é o básico. Se não entendeu, pare por aqui.</P>
 <P>
 <HR>
-<H1><A NAME="métodos">MÉTODOS</A></H1>
-<P>Os métodos do <CODE>UOLbot</CODE> são:</P>
+<H1><A NAME="construtor">CONSTRUTOR</A></H1>
 <DL>
 <DT><STRONG><A NAME="item_new"><CODE>new ([ARGS])</CODE></A></STRONG><BR>
 <DD>
@@ -146,6 +146,12 @@ a cor do nickname (valor default é <EM>0</EM>)
   5 - Cinza
   6 - Roxo</PRE>
 <P></P>
+<DT><STRONG><A NAME="item_Avatar"><EM>Avatar</EM></A></STRONG><BR>
+<DD>
+define ``carinha'' na frente do nick (número inteiro, para ser descoberto na tentativa e erro :(
+<P><EM>Obs</EM>: a ``carinha'' só vai aparecer se você for autenticado com <A HREF="#item_auth"><CODE>auth</CODE></A>!</P>
+<P><EM>Obs2</EM>: pra tirar a ``carinha'' já definida, chame <A HREF="#item_avatar"><CODE>$bot-&gt;avatar (-1)</CODE></A>.</P>
+<P></P>
 <DT><STRONG><A NAME="item_Listen_Handler"><EM>Listen_Handler</EM></A></STRONG><BR>
 <DD>
 referência para o código que vai processar as
@@ -167,11 +173,19 @@ Nesse caso, variável <EM>$data</EM> recebe pacotes com código HTML recebidos.</P
 <P><EM>Obs</EM>: lembre que nem sempre há uma mensagem em um pacote. O servidor
 (ou buffer do sistema operacional) pode juntar vários pacotes num só.</P>
 <P></P></DL>
+</DL>
+<P>
+<HR>
+<H1><A NAME="métodos">MÉTODOS</A></H1>
+<P>Os métodos do <CODE>UOLbot</CODE> são:</P>
+<DL>
 <DT><STRONG><A NAME="item_ua"><CODE>ua</CODE></A></STRONG><BR>
 <DD>
 <DT><STRONG><A NAME="item_nick"><CODE>nick</CODE></A></STRONG><BR>
 <DD>
 <DT><STRONG><A NAME="item_color"><CODE>color</CODE></A></STRONG><BR>
+<DD>
+<DT><STRONG><A NAME="item_avatar"><CODE>avatar</CODE></A></STRONG><BR>
 <DD>
 <DT><STRONG><A NAME="item_listen_handler"><CODE>listen_handler</CODE></A></STRONG><BR>
 <DD>
@@ -215,6 +229,17 @@ passa o fragmento da conversa para rotina definida em <A HREF="#item_Listen_Hand
 <LI>
 retorna <EM>1</EM>
 <P></P></OL>
+<DT><STRONG><A NAME="item_auth"><CODE>auth (USER, PASS)</CODE></A></STRONG><BR>
+<DD>
+Autentica usuário registrado. Permite entrar nas salas com mais de 30 pessoas e usar
+``carinha'' na frente do nick. <CODE>USER</CODE> é o nome de usuário em forma <EM><A HREF="mailto:'nome@uol.com.br'">'nome@uol.com.br'</A></EM>
+e <CODE>PASS</CODE> é a senha.
+<P>Retorna <EM>0</EM> se houver falha (username/senha inválidos) e <EM>1</EM> se tiver sucesso.</P>
+<P><EM>Obs</EM>: você deve autenticar <STRONG>antes</STRONG> de efetuar <A HREF="#item_login"><CODE>login</CODE></A>!</P>
+<P><EM>Obs2</EM>: <A HREF="#item_auth"><CODE>auth</CODE></A> utiliza conexão encriptada via SSL automaticamente quando o módulo
+<CODE>Crypt::SSLeay</CODE> é encontrado no sistema. Sem esse módulo, a conexão efetuada é
+insegura e a senha pode ser vista por pessoas mal-intencionadas!</P>
+<P></P>
 <DT><STRONG><A NAME="item_login"><CODE>login (ROOM [, REF])</CODE></A></STRONG><BR>
 <DD>
 Efetua <EM>login</EM> na sala <CODE>ROOM</CODE> de bate-papo. Parâmetro <CODE>ROOM</CODE> consiste
@@ -231,6 +256,10 @@ Leia mais sobre <A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A>.
 <DT><STRONG><A NAME="item_is_logged"><CODE>is_logged</CODE></A></STRONG><BR>
 <DD>
 Retorna <EM>1</EM> se o bot estiver atualmente numa sala de bate-papo e <EM>0</EM> caso contrário.
+<P></P>
+<DT><STRONG><A NAME="item_is_auth"><CODE>is_auth</CODE></A></STRONG><BR>
+<DD>
+Retorna <EM>1</EM> se o bot estiver autenticado como usuário registrado da UOL.
 <P></P>
 <DT><STRONG><A NAME="item_login_error"><CODE>login_error</CODE></A></STRONG><BR>
 <DD>
@@ -432,10 +461,6 @@ para pôr referência ao código...</P>
 <A HREF="#item_logout"><CODE>logout</CODE></A> antes que seja feito um <A HREF="#item_login"><CODE>login</CODE></A>, portanto não se desanime.</P>
 <P></P>
 <LI>
-``caretas'' na frente do nick
-<P>Precisa ser assinante para usar tal artefato inútil. Duvido que um bot assine UOL!</P>
-<P></P>
-<LI>
 utilizar um proxy HTTP
 <P>Grande maioria dos proxies públicos (os normalmente utilizados para anonimizar
 acessos) não deixa conectar nas portas não-HTTP. <STRONG>Nenhuma</STRONG> das salas de bate-papo
@@ -476,17 +501,24 @@ de bate-papo e seus respectivos títulos.
 <P>
 <HR>
 <H1><A NAME="versão">VERSÃO</A></H1>
-<P>1.1</P>
+<P>1.2a</P>
 <P>
 <HR>
 <H1><A NAME="histórico">HISTÓRICO</A></H1>
 <UL>
 <LI>
-<STRONG>1.0</STRONG> <EM>(25/Jan/2002)</EM> - primeira versão funcional
+<STRONG>1.0</STRONG> <EM>(25/Jan/2002)</EM> - primeira versão funcional.
 <P></P>
 <LI>
 <STRONG>1.1</STRONG> <EM>(09/Fev/2002)</EM> - utilizado o <CODE>Carp::croak</CODE> para erros de usuário e
 adicionado o método <A HREF="#item_brief"><CODE>brief</CODE></A>. Correções menores na documentação.
+<P></P>
+<LI>
+<STRONG>1.2</STRONG> <EM>(03/Mar/2002)</EM> - adicionados métodos <A HREF="#item_auth"><CODE>auth</CODE></A> e <A HREF="#item_avatar"><CODE>avatar</CODE></A> (para tirar
+proveito de ser usuário registrado da UOL ;).
+<P></P>
+<LI>
+<STRONG>1.2a</STRONG> <EM>(04/Mar/2002)</EM> - atualizações na documentação.
 <P></P></UL>
 <P>
 <HR>
