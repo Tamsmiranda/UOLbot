@@ -33,7 +33,9 @@ Windows
 
   my $bot = new UOLbot (Nick => 'b0t');
 
-  $bot->login ('http://batepapo4.uol.com.br:3999');
+  my $imgcode = $bot->join ('http://batepapo4.uol.com.br:3999');
+  my $code = &imgcode2code ($imgcode);
+  $bot->login ($code);
   $bot->send ("oi!");
   $bot->logout;
 
@@ -81,12 +83,30 @@ disso.
 
 Pronto, você criou o seu bot... E agora? Ele deve entrar numa sala, né?
 
-  $bot->login ('http://batepapo4.uol.com.br:3999');
+  my $imgcode = $bot->join ('http://batepapo4.uol.com.br:3999');
 
 (ótima sala para propaganda, eheheh)
 Aí você passa a URL da sala. É o único parâmetro B<necessário>.
 É claro que ter que saber essa URL é um pé no saco, você pode entrar na
 sala só sabendo o seu nome. Mas isso é para depois.
+
+Opa, mas espere um pouco. Você já deve ter percebido aqueles códigos de
+verificação anti-spam, né (antes não existia isso não)... O que fazer
+agora? A minha sugestão é pegar o a URL da imagem em I<$imgcode>, abrir
+num browser, aí B<você> lê o código e passa para o bot. Como? Uma possibilidade
+é a seguinte sub-rotina:
+
+  sub imgcode2code {
+     print "\n$_[0]\n";
+     print " * me diga o código de 4 letras que aparece nessa imagem: ";
+     my $code;
+     chomp ($code = <STDIN>);
+     return $code;
+  }
+
+Sujo, mas fazer o que! Agora, completemos o I<login>:
+
+  $bot->login ($code);
 
 Estando na sala, o que fazer? Falar!
 
@@ -105,7 +125,7 @@ Isso é o básico. Se não entendeu, pare por aqui.
 
 
 use vars qw(@ISA $VERSION $entry $bufsize $CRLF);
-$VERSION = "1.2a";
+$VERSION = "1.3";
 
 # define constantes
 $entry		= 'http://batepapo.uol.com.br/bp/excgi/salas_new.shl';
@@ -244,6 +264,7 @@ sub new {
 
    $self->{users}	= [];
    $self->{logged}	= 0;
+   $self->{joined}	= 0;
    $self->{auth}	= 0;
 
    $self->{cookies}	= new HTTP::Cookies;
@@ -258,6 +279,8 @@ sub new {
 
    if (defined $self->{avatar}) {
       $self->avatar ($self->{avatar});
+   } else {
+      $self->{avatar} = -1;
    }
 
 
@@ -319,9 +342,6 @@ sub avatar {
    my $r = $self->getset ('avatar',		@_);
    my $avatar = shift;
    $self->{cookies}->set_cookie (undef, 'AVATARCHAT', $avatar, '/', '.uol.com.br');
-   if ($avatar == -1) {
-      delete $self->{avatar};
-   }
    return $r;
 }
 sub listen_handler {
@@ -436,7 +456,7 @@ sub brief {
    my ($self, $room) = @_;
 
    # verificação básica
-   $room =~ m%^http://batepapo\d.uol.com.br:\d+/?%i ||
+   $room =~ m%^http://batepapo\d\.uol\.com\.br:\d+/?%i ||
       croak "brief: URL inválida";
 
    # completa a URL
@@ -496,6 +516,9 @@ sub auth {
    my $targ = 'http://batepapo.uol.com.br/bp/troca.htm';
    my $targf = &ief ($targ);
 
+   # acerta username
+   $user .= '@uol.com.br' unless $user =~ /\@/;
+
    # faz pedido
    my $req = $self->{ua}->request (HTTP::Request->new (GET => $url.'?URL='.$targ, $self->{header}));
    return 0 unless $req->is_success;
@@ -534,36 +557,93 @@ sub auth {
 }
 
 
-=item C<login (ROOM [, REF])>
+=item C<join (ROOM [, REF])>
 
-Efetua I<login> na sala C<ROOM> de bate-papo. Parâmetro C<ROOM> consiste
+Efetua I<join> na sala C<ROOM> de bate-papo. Parâmetro C<ROOM> consiste
 de uma string de formato C<"http://batepapo4.uol.com.br:3999/">. Parâmetro
 C<REF>, opcional, é o I<Referer>, o documento que continha o link para
 C<ROOM>. Se você omitir o C<REF>, valor
 I<'http://batepapo.uol.com.br/bp/excgi/salas_new.shl'>
 será usado automaticamente. Se você estiver usado C<list_subgrp> antes
-de C<login>, a URL de sub-grupo listado será usada como C<REF>.
+de C<join>, a URL de sub-grupo listado será usada como C<REF>.
 Leia mais sobre C<list_subgrp>.
 
+Retorna a URL com imagem-código para ser decifrada (leia reconhecida pelo
+usuário) ou I<''> no caso da falha.
+
+=cut
+
+sub join {
+   my $self = shift;
+   my ($room, $ref) = @_;
+
+   # tolera erro bobo
+   return 0 if $self->is_logged;
+   $_[0] =~ m%^http://batepapo\d\.uol\.com\.br:\d+/?%i ||
+      croak "join: URL inválida";
+
+   # processar os parâmetros
+   croak "erro interno em join(): falta URL da sala" if not defined $room or not $room;
+   $room .= '/' unless $room =~ m{/$};
+
+   # "lembra" o Referer se for possível
+   $self->{room} = $room;
+   if (defined $ref and $ref ne '') {
+      $self->{ref} = $ref;
+   } elsif (defined $self->{from}) {
+      $self->{ref} = $self->{from};
+   } else {
+      $self->{ref} = $entry;
+   }
+
+   $self->{header}->header ('Referer', $self->{ref});
+
+   # envia "Join Server"
+   my $resp = $self->post ('', 'JS=1&USER='.$self->{user}.'&nickCor='.$self->{color}, $self->{header});
+
+   # epa... o que aconteceu?
+   return '' if $resp->is_error;
+
+   # outro referer agora...
+   $self->{header}->header ('Referer', $room);
+
+   # pega o !@#$%^& código em imagem...
+   $resp->content =~ m{<img src="(http://imgcode\.uol\.com\.br/.*?\.jpg)"}s ||
+      croak "join: servidor enviou resposta inválida (URL da imagem-código não encontrada)";
+
+   # retorna a URL com imagem-código
+   $self->{joined} = 1;
+   return $1;
+}
+
+
+=item C<login (CODE)>
+
+Completa I<login> na sala de bate-papo definida em C<join>. O parâmetro C<CODE>
+é o código de verificação obtido a partir da URL retornada pelo C<join>.
+
 Retorna I<0> se houver falha e I<1> se tiver sucesso. A "falha" mais provável
-é que a sala esteja cheia.
+é que a sala esteja cheia. Utilize o C<login_error> para obter mais detalhes
+sobre a falha ocorrida.
 
 =cut
 
 sub login {
-   my $self = shift;
+   my ($self, $code) = @_;
+
+   # erro grave!
+   croak "login: código de verificação inválido" if
+      (not defined $code) or
+      ($code eq '') or
+      (length ($code) != 4);
 
    # tolera erro bobo
-   return 0 if $self->is_logged;
-   $_[0] =~ m%^http://batepapo\d.uol.com.br:\d+/?%i ||
-      croak "login: URL inválida";
+   return 0 if $self->is_logged or not $self->{joined};
 
    # a grande macro...
-   my $r = $self->join (@_);
-   return $r unless $r;
-
-   $self->load    || return 0;
-   $self->listen  || return 0;
+   $self->verify ($code)        || return 0;
+   $self->load                  || return 0;
+   $self->listen                || return 0;
 
    # se é que estamos aqui...
    $self->{logged}	= 1;
@@ -603,6 +683,7 @@ Retorna o código do erro durante login:
   0     - sucesso
   1     - nickname já foi utilizado
   2     - sala está cheia
+  3     - código de verificação incorreto
   undef - erro desconhecido (ver valor de $!)
 
 =cut
@@ -611,29 +692,27 @@ sub login_error {
    return shift->{err};
 }
 
+sub verify {
+   my ($self, $code) = @_;
+   my $resp;
+   my $line = sprintf (
+      'TESTE=1&IMGCODEERROR=0&USER=%s&JS=1&nickCor=%d&avatar=%d&FASE=%%d&IMGCODEPSW=%s',
+      $self->{user}, $self->{color}, $self->{avatar}, $code,
+   );
 
-sub join {
-   my ($self, $room, $ref) = @_;
-
-   # processar os parâmetros
-   croak "erro interno em join(): falta URL da sala" if not defined $room or not $room;
-   $room .= '/' unless $room =~ m{/$};
-
-   # "lembra" o Referer se for possível
-   $self->{room} = $room;
-   if (defined $ref and $ref ne '') {
-      $self->{ref} = $ref;
-   } elsif (defined $self->{from}) {
-      $self->{ref} = $self->{from};
-   } else {
-      $self->{ref} = $entry;
+   # 1-a fase
+   $resp = $self->post ('', sprintf ($line, 1), $self->{header});
+   if ($resp->is_error) {
+      # que é que poderia ser?
+      return 0;
+   } elsif (not $resp->content =~ /name="FASE" value="2"/) {
+      # ih, código errado...
+      $self->{err} = 3;
+      return 0;
    }
 
-   $self->{header}->header ('Referer', $self->{ref});
-
-   # envia "Join Server"
-   my $resp = $self->post ('', 'JS=1&USER='.$self->{user}.'&nickCor='.$self->{color}, $self->{header});
-
+   # 2-a fase
+   $resp = $self->post ('', sprintf ($line, 2), $self->{header});
    # trata o eventual erro
    if ($resp->code != 200) {
       if ($resp->code == 302) {
@@ -644,12 +723,13 @@ sub join {
             $self->{err} = 2;	# sala cheia
          }
       }
-
       return 0;
    }
-   
+
    # salva dados da sessão
-   ($self->{id}) = $resp->content =~ /&ID=(.*?)&/;
+   $resp->content =~ /&ID=(.*?)&/ ||
+      croak "join: servidor enviou resposta inválida (sem ID adquirido)";
+   $self->{id} = $1;
    $self->{usid} = 'USER='.$self->{user}.'&ID='.$self->{id}.'&';
 
    return 1;
@@ -1045,6 +1125,7 @@ sub scroll {
    while (select ($rout=$rin, undef, undef, $timeout)) {
       return 0 unless sysread ($self->{sock}, $data, $bufsize);
       $self->handle (\$data);
+      return 1 unless defined $timeout;
    }
 
    return 1;
@@ -1064,6 +1145,7 @@ sub logout {
    # sempre deve zerar o $self->{logged}
    return 0 unless $self->is_logged;
    $self->{logged} = 0;
+   $self->{joined} = 0;
    delete $self->{err};
 
    # envia "Exit"
@@ -1266,7 +1348,7 @@ de bate-papo e seus respectivos títulos.
 
 =head1 VERSÃO
 
-1.2a
+1.3
 
 =cut
 
@@ -1292,6 +1374,12 @@ proveito de ser usuário registrado da UOL ;).
 =item *
 
 B<1.2a> I<(04/Mar/2002)> - atualizações na documentação.
+
+=item *
+
+B<1.3> I<(27/Mar/2002)> - reestruturado o processo de login devido às alterações
+feitas nos servidores da UOL. Agora você deve dar um C<join> na sala escolhida,
+obter o código de verificação e completar operação com C<login>. Maldição!
 
 =back
 

@@ -53,7 +53,9 @@ Windows
 <PRE>
   my $bot = new UOLbot (Nick =&gt; 'b0t');</PRE>
 <PRE>
-  $bot-&gt;login ('<A HREF="http://batepapo4.uol.com.br:3999">http://batepapo4.uol.com.br:3999</A>');
+  my $imgcode = $bot-&gt;join ('<A HREF="http://batepapo4.uol.com.br:3999">http://batepapo4.uol.com.br:3999</A>');
+  my $code = &amp;imgcode2code ($imgcode);
+  $bot-&gt;login ($code);
   $bot-&gt;send (&quot;oi!&quot;);
   $bot-&gt;logout;</PRE>
 <PRE>
@@ -95,11 +97,27 @@ Você pode ter várias instâncias, só não sei qual o sentido
 disso.</P>
 <P>Pronto, você criou o seu bot... E agora? Ele deve entrar numa sala, né?</P>
 <PRE>
-  $bot-&gt;login ('<A HREF="http://batepapo4.uol.com.br:3999">http://batepapo4.uol.com.br:3999</A>');</PRE>
+  my $imgcode = $bot-&gt;join ('<A HREF="http://batepapo4.uol.com.br:3999">http://batepapo4.uol.com.br:3999</A>');</PRE>
 <P>(ótima sala para propaganda, eheheh)
 Aí você passa a URL da sala. É o único parâmetro <STRONG>necessário</STRONG>.
 É claro que ter que saber essa URL é um pé no saco, você pode entrar na
 sala só sabendo o seu nome. Mas isso é para depois.</P>
+<P>Opa, mas espere um pouco. Você já deve ter percebido aqueles códigos de
+verificação anti-spam, né (antes não existia isso não)... O que fazer
+agora? A minha sugestão é pegar o a URL da imagem em <EM>$imgcode</EM>, abrir
+num browser, aí <STRONG>você</STRONG> lê o código e passa para o bot. Como? Uma possibilidade
+é a seguinte sub-rotina:</P>
+<PRE>
+  sub imgcode2code {
+     print &quot;\n$_[0]\n&quot;;
+     print &quot; * me diga o código de 4 letras que aparece nessa imagem: &quot;;
+     my $code;
+     chomp ($code = &lt;STDIN&gt;);
+     return $code;
+  }</PRE>
+<P>Sujo, mas fazer o que! Agora, completemos o <EM>login</EM>:</P>
+<PRE>
+  $bot-&gt;login ($code);</PRE>
 <P>Estando na sala, o que fazer? Falar!</P>
 <PRE>
   $bot-&gt;send (&quot;oi!&quot;);</PRE>
@@ -240,18 +258,26 @@ e <CODE>PASS</CODE> é a senha.
 <CODE>Crypt::SSLeay</CODE> é encontrado no sistema. Sem esse módulo, a conexão efetuada é
 insegura e a senha pode ser vista por pessoas mal-intencionadas!</P>
 <P></P>
-<DT><STRONG><A NAME="item_login"><CODE>login (ROOM [, REF])</CODE></A></STRONG><BR>
+<DT><STRONG><A NAME="item_join"><CODE>join (ROOM [, REF])</CODE></A></STRONG><BR>
 <DD>
-Efetua <EM>login</EM> na sala <CODE>ROOM</CODE> de bate-papo. Parâmetro <CODE>ROOM</CODE> consiste
+Efetua <EM>join</EM> na sala <CODE>ROOM</CODE> de bate-papo. Parâmetro <CODE>ROOM</CODE> consiste
 de uma string de formato <CODE>&quot;http://batepapo4.uol.com.br:3999/&quot;</CODE>. Parâmetro
 <CODE>REF</CODE>, opcional, é o <EM>Referer</EM>, o documento que continha o link para
 <CODE>ROOM</CODE>. Se você omitir o <CODE>REF</CODE>, valor
 <EM>'http://batepapo.uol.com.br/bp/excgi/salas_new.shl'</EM>
 será usado automaticamente. Se você estiver usado <A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A> antes
-de <A HREF="#item_login"><CODE>login</CODE></A>, a URL de sub-grupo listado será usada como <CODE>REF</CODE>.
+de <A HREF="#item_join"><CODE>join</CODE></A>, a URL de sub-grupo listado será usada como <CODE>REF</CODE>.
 Leia mais sobre <A HREF="#item_list_subgrp"><CODE>list_subgrp</CODE></A>.
+<P>Retorna a URL com imagem-código para ser decifrada (leia reconhecida pelo
+usuário) ou <EM>''</EM> no caso da falha.</P>
+<P></P>
+<DT><STRONG><A NAME="item_login"><CODE>login (CODE)</CODE></A></STRONG><BR>
+<DD>
+Completa <EM>login</EM> na sala de bate-papo definida em <A HREF="#item_join"><CODE>join</CODE></A>. O parâmetro <CODE>CODE</CODE>
+é o código de verificação obtido a partir da URL retornada pelo <A HREF="#item_join"><CODE>join</CODE></A>.
 <P>Retorna <EM>0</EM> se houver falha e <EM>1</EM> se tiver sucesso. A ``falha'' mais provável
-é que a sala esteja cheia.</P>
+é que a sala esteja cheia. Utilize o <A HREF="#item_login_error"><CODE>login_error</CODE></A> para obter mais detalhes
+sobre a falha ocorrida.</P>
 <P></P>
 <DT><STRONG><A NAME="item_is_logged"><CODE>is_logged</CODE></A></STRONG><BR>
 <DD>
@@ -268,6 +294,7 @@ Retorna o código do erro durante login:
   0     - sucesso
   1     - nickname já foi utilizado
   2     - sala está cheia
+  3     - código de verificação incorreto
   undef - erro desconhecido (ver valor de $!)</PRE>
 <P></P>
 <DT><STRONG><A NAME="item_users"><CODE>users</CODE></A></STRONG><BR>
@@ -501,7 +528,7 @@ de bate-papo e seus respectivos títulos.
 <P>
 <HR>
 <H1><A NAME="versão">VERSÃO</A></H1>
-<P>1.2a</P>
+<P>1.3</P>
 <P>
 <HR>
 <H1><A NAME="histórico">HISTÓRICO</A></H1>
@@ -519,6 +546,11 @@ proveito de ser usuário registrado da UOL ;).
 <P></P>
 <LI>
 <STRONG>1.2a</STRONG> <EM>(04/Mar/2002)</EM> - atualizações na documentação.
+<P></P>
+<LI>
+<STRONG>1.3</STRONG> <EM>(26/Mar/2002)</EM> - reestruturado o processo de login devido às alterações
+feitas nos servidores da UOL. Agora você deve dar um <A HREF="#item_join"><CODE>join</CODE></A> na sala escolhida,
+obter o código de verificação e completar operação com <A HREF="#item_login"><CODE>login</CODE></A>. Maldição!
 <P></P></UL>
 <P>
 <HR>

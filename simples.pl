@@ -5,6 +5,7 @@ use UOLbot;
 # para *ver* o que realmente está acontecendo, execute:
 # perl simples.pl debug
 LWP::Debug::level ('+') if grep /debug/i, @ARGV;
+$| = 1;
 
 
 # criamos o nosso próprio UserAgent
@@ -38,17 +39,30 @@ $bot->brief ($url) || die "can't brief(): $!";
 print "Users online: ", join ('|', $bot->users), "\n";
 
 # entra na sala
-unless ($bot->login ($url)) {
+my ($imgcode, $code);
+$imgcode = $bot->join ($url);
+die "can't join(): $!" unless $imgcode;
+
+# pede para o operador identificar o código
+# (se alguém tiver a moral de decifrar essa URL, contact-me!!! ;)
+print "\n$imgcode\n";
+print " * me diga o código de 4 letras que aparece nessa imagem: ";
+chomp ($code = <STDIN>);
+
+# completa o login
+unless ($bot->login ($code)) {
    my $err = $bot->login_error;
    my $msg;
    unless (defined $err) {
       $msg = $!;
    } elsif ($err == 1) {
-      $msg = 'nick already used';
+      $msg = 'nick em uso';
    } elsif ($err == 2) {
-      $msg = 'room is full';
+      $msg = 'sala cheia';
+   } elsif ($err == 3) {
+      $msg = 'código de verificação incorreto';
    } else {
-      $msg = 'unknown error';
+      $msg = 'erro desconhecido';
    }
    die "can't login(): $msg";
 }
