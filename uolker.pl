@@ -4,8 +4,8 @@ use Getopt::Long;
 use UOLbot;
 use vars qw(%conf $bot %room);
 
-# não mexer!
-#$UOL::bot::OCR = 0;
+# OCR está quebrado mesmo :(
+$UOL::bot::OCR = 0;
 
 # formato de configuração
 use constant CONF => qw(

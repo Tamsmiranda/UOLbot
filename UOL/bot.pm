@@ -121,12 +121,12 @@ Isso é o básico. Se não entendeu, pare por aqui.
 
 
 use vars qw(@ISA $VERSION $OCR);
-$VERSION = "2.01";
+$VERSION = "2.02";
 
 # define constantes
 use constant ENTRY	=> 'http://batepapo.uol.com.br/bp/excgi/salas_new.shl';
 use constant BUFSIZE	=> 32768;
-use constant CRLF	=> "\012"; #"\015\012";
+use constant CRLF	=> "\015\012"; # "\012";
 use constant MAGIC	=> 'D||receive@uol.com.br||3D46E369||7FFFFFFFFFFFFFFFFFFFFFFF||0||5B829405290999D1';
 
 
@@ -1465,6 +1465,9 @@ sub reref {
 sub post {
    my ($self, $uri, $content, $header) = @_;
 
+   # parece que sem o 'trailing' dá p0w...
+   $content .= CRLF;
+
    my $req = HTTP::Request->new (POST => $self->{room}.$uri, $header);
    $req->header ('Content-Type', 'application/x-www-form-urlencoded');
    $req->header ('Content-Length', length $content);
@@ -1523,11 +1526,11 @@ sub room_url {
 sub default_imgcode_handler {
    my $req = shift;
    my $code;
-   print "\n", '='x62, "\n",
+   print "\n", '='x64, "\n",
          $req->uri->as_string, "\n";
    print "4-digit code: ";
    chomp ($code = <STDIN>);
-   print "="x62, "\n\n";
+   print "="x64, "\n\n";
    return $code;
 }
 
@@ -1676,7 +1679,7 @@ de bate-papo e seus respectivos títulos.
 
 =head1 VERSÃO
 
-2.01
+2.02
 
 =cut
 
@@ -1723,6 +1726,10 @@ Módulo C<UOL::OCR> incluído.
 =item *
 
 B<2.01> I<(06/Dez/2002)> - Correção menor devido à atualização de protocolo nos servidores do UOL.
+
+=item *
+
+B<2.02> I<(25/Mai/2003)> - Arrumado o repentinamente surgido problema com "trailers" de linha. Agora está 100% IE :).
 
 =back
 
