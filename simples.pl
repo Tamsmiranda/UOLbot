@@ -2,43 +2,51 @@
 use strict;
 use UOLbot;
 
-# para *ver* o que realmente está acontecendo, execute:
-# perl simples.pl debug
-LWP::Debug::level ('+') if grep /debug/i, @ARGV;
-$| = 1;
-
-
-# criamos o nosso próprio UserAgent
-my $ua = LWP::UserAgent->new;
-$ua->agent ('Mozilla/4.0 (compatible; MSIE 6.0; Windows 98)');
-$ua->timeout (30);
-#$ua->proxy (http => 'http://localhost:8080/'); # para testes
-
+##############
+# para testes
+#$UOL::bot::OCR = 0;
+$UOL::OCR::verbosity = 7;
+#LWP::Debug::level ('+');
+##############
 
 # cria instância de bot
 my $bot = new UOLbot (
-   UA			=> $ua,
-   Nick			=> 'teste',
+   Nick		=> 'machinehead',	# nome digno de bot
+   Color	=> 3,			# azul
+   Avatar	=> 74,			# um feinho
+   Fast		=> 1,			# para não descepcionar ;)
 );
 
-# autentica usuário registrado
-$bot->auth ('carela@uol.com.br', '123mudar') || die "can't auth(): $!";
+##############
+# para testes
+#$bot->ua->proxy (http => 'http://localhost:8080/');
+##############
 
-# lista sub-grupo 'São Paulo Interior'
-my @rooms = $bot->list_subgrp ('idspin5.conf');
+# autentica usuário registrado para entrar em salas com mais de 30 pessoas
+my @auth = qw(); # qw(stanislav 123mudar)
+print "autenticando\n";
+$bot->auth (@auth) || die "can't auth(): $!";
+
+# lista sub-grupo 'Cidades e Regiões/SP Interior (S-Z)'
+my $subgrp = 'idspin5.conf';
+print "listando sub-grupo $subgrp\n";
+my @rooms = $bot->list_subgrp ($subgrp);
 die "can't list_subgrp(): $!" unless @rooms;
 
-# sala #16 ('Saint Charles') ;)
+# sala #16 ('Saint Charles 1') ;)
 my $url = $rooms[16]->{URL};
 
 # espia a sala
+print "espiando a sala $url\n";
 $bot->brief ($url) || die "can't brief(): $!";
 
-# imprime a lista de usuários
-print "Users online: ", join ('|', $bot->users), "\n";
+# imprime a lista de usuários conectados
+print "users online: ", join ('|', $bot->users), "\n";
 
-# entra na sala
+# entra na sala escolhida
+print "entrando na sala $url\n";
 unless ($bot->login ($url)) {
+   # verificação avançada de erro
    my $err = $bot->login_error;
    my $msg;
    unless (defined $err) {
@@ -55,14 +63,15 @@ unless ($bot->login ($url)) {
    die "can't login(): $msg";
 }
 
-# envia mensagens
+# envia mensagens bem... automáticas
 for (my $i = 1; $i <= 5; $i++) {
    print "enviando mensagem $i\n";
-   $bot->send ("testando $i...") || die "can't send(): $!";
+   $bot->send ("teste $i") || die "can't send(): $!";
 }
 
 # sai da sala
+print "saindo da sala\n";
 $bot->logout || die "can't logout(): $!";
 
-
+# falows
 exit;
