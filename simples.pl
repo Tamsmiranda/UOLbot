@@ -22,15 +22,14 @@ my $bot = new UOLbot (
 );
 
 # autentica usuário registrado
-#$bot->auth ('****@uol.com.br', '********') || die "can't auth(): $!";
-
+$bot->auth ('carela@uol.com.br', '123mudar') || die "can't auth(): $!";
 
 # lista sub-grupo 'São Paulo Interior'
 my @rooms = $bot->list_subgrp ('idspin5.conf');
 die "can't list_subgrp(): $!" unless @rooms;
 
-# sala #15 ('Saint Charles') ;)
-my $url = $rooms[15]->{URL};
+# sala #16 ('Saint Charles') ;)
+my $url = $rooms[16]->{URL};
 
 # espia a sala
 $bot->brief ($url) || die "can't brief(): $!";
@@ -39,18 +38,7 @@ $bot->brief ($url) || die "can't brief(): $!";
 print "Users online: ", join ('|', $bot->users), "\n";
 
 # entra na sala
-my ($imgcode, $code);
-$imgcode = $bot->join ($url);
-die "can't join(): $!" unless $imgcode;
-
-# pede para o operador identificar o código
-# (se alguém tiver a moral de decifrar essa URL, contact-me!!! ;)
-print "\n$imgcode\n";
-print " * me diga o código de 4 letras que aparece nessa imagem: ";
-chomp ($code = <STDIN>);
-
-# completa o login
-unless ($bot->login ($code)) {
+unless ($bot->login ($url)) {
    my $err = $bot->login_error;
    my $msg;
    unless (defined $err) {
@@ -69,6 +57,7 @@ unless ($bot->login ($code)) {
 
 # envia mensagens
 for (my $i = 1; $i <= 5; $i++) {
+   print "enviando mensagem $i\n";
    $bot->send ("testando $i...") || die "can't send(): $!";
 }
 

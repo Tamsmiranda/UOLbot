@@ -21,7 +21,7 @@ Linux
 =item *
 
 Windows
-(ActivePerl 5.6.1 Build 630)
+(ActivePerl 5.6.1 Build 632)
 
 =back
 
@@ -33,9 +33,7 @@ Windows
 
   my $bot = new UOLbot (Nick => 'b0t');
 
-  my $imgcode = $bot->join ('http://batepapo4.uol.com.br:3999');
-  my $code = &imgcode2code ($imgcode);
-  $bot->login ($code);
+  $bot->login ('http://batepapo4.uol.com.br:3999');
   $bot->send ("oi!");
   $bot->logout;
 
@@ -83,7 +81,7 @@ disso.
 
 Pronto, você criou o seu bot... E agora? Ele deve entrar numa sala, né?
 
-  my $imgcode = $bot->join ('http://batepapo4.uol.com.br:3999');
+  $bot->login ('http://batepapo4.uol.com.br:3999');
 
 (ótima sala para propaganda, eheheh)
 Aí você passa a URL da sala. É o único parâmetro B<necessário>.
@@ -92,9 +90,8 @@ sala só sabendo o seu nome. Mas isso é para depois.
 
 Opa, mas espere um pouco. Você já deve ter percebido aqueles códigos de
 verificação anti-spam, né (antes não existia isso não)... O que fazer
-agora? A minha sugestão é pegar o a URL da imagem em I<$imgcode>, abrir
-num browser, aí B<você> lê o código e passa para o bot. Como? Uma possibilidade
-é a seguinte sub-rotina:
+agora? A minha sugestão é pegar a URL da imagem, abrir num browser, aí B<você>
+lê o código e passa para o bot. Como? Uma possibilidade é a seguinte sub-rotina:
 
   sub imgcode2code {
      print "\n$_[0]\n";
@@ -104,10 +101,11 @@ num browser, aí B<você> lê o código e passa para o bot. Como? Uma possibilidade
      return $code;
   }
 
-Sujo, mas fazer o que! Agora, completemos o I<login>:
-
-  $bot->login ($code);
-
+Sujo, mas fazer o que! Sem comentários... Ainda bem que essa tal da rotina é embutida no
+C<UOLbot>, i.e., o código acima é apenas informativo; sempre que você der um C<login>
+automaticamente é impressa uma URL na tela, você a abre, lê o código e digita que o C<login>
+procede normalmente... (Se você tiver sugestão melhor, algo como I<OCR>, mais para frente
+eu ensino a trocar essa rotina por qualquer uma)
 Estando na sala, o que fazer? Falar!
 
   $bot->send ("oi!");
@@ -125,7 +123,7 @@ Isso é o básico. Se não entendeu, pare por aqui.
 
 
 use vars qw(@ISA $VERSION $entry $bufsize $CRLF);
-$VERSION = "1.3";
+$VERSION = "1.4";
 
 # define constantes
 $entry		= 'http://batepapo.uol.com.br/bp/excgi/salas_new.shl';
@@ -199,9 +197,17 @@ I<Obs>: a "carinha" só vai aparecer se você for autenticado com C<auth>!
 
 I<Obs2>: pra tirar a "carinha" já definida, chame C<$bot-E<gt>avatar (-1)>.
 
+=item I<ImgCode_Handler>
+
+referência para a rotina que vai processar a imagem com código de verificação. O default
+é uma aberração que imprime a URL e manda usuário abrir a imagem e digitar o código lido...
+Se você tiver um I<OCR> decente insira-o aqui. A sintaxe é:
+
+  ImgCode_Handler => sub { print $_[0], "\n"; scalar <STDIN>; chomp; return $_ }
+
 =item I<Listen_Handler>
 
-referência para o código que vai processar as
+referência para a rotina que vai processar as
 informações recebidas da sala (indefinido por default).
 Por exemplo:
 
@@ -257,6 +263,12 @@ sub new {
       $self->{listen_handler} = undef;
    }
 
+   # ativar 'imgcode handler' default
+   unless ((defined $self->{imgcode_handler}) and
+           (ref ($self->{imgcode_handler}) eq 'CODE')) {
+      $self->{imgcode_handler} = \&default_imgcode_handler;
+   }
+
 
    # configuração básica
    $self->{user}	= &ief ($self->{nick});
@@ -264,7 +276,6 @@ sub new {
 
    $self->{users}	= [];
    $self->{logged}	= 0;
-   $self->{joined}	= 0;
    $self->{auth}	= 0;
 
    $self->{cookies}	= new HTTP::Cookies;
@@ -302,6 +313,8 @@ Os métodos do C<UOLbot> são:
 =item C<color>
 
 =item C<avatar>
+
+=item C<imgcode_handler>
 
 =item C<listen_handler>
 
@@ -346,6 +359,9 @@ sub avatar {
 }
 sub listen_handler {
    shift->getset ('listen_handler',	@_);
+}
+sub imgcode_handler {
+   shift->getset ('imgcode_handler',	@_);
 }
 
 
@@ -557,29 +573,14 @@ sub auth {
 }
 
 
-=item C<join (ROOM [, REF])>
-
-Efetua I<join> na sala C<ROOM> de bate-papo. Parâmetro C<ROOM> consiste
-de uma string de formato C<"http://batepapo4.uol.com.br:3999/">. Parâmetro
-C<REF>, opcional, é o I<Referer>, o documento que continha o link para
-C<ROOM>. Se você omitir o C<REF>, valor
-I<'http://batepapo.uol.com.br/bp/excgi/salas_new.shl'>
-será usado automaticamente. Se você estiver usado C<list_subgrp> antes
-de C<join>, a URL de sub-grupo listado será usada como C<REF>.
-Leia mais sobre C<list_subgrp>.
-
-Retorna a URL com imagem-código para ser decifrada (leia reconhecida pelo
-usuário) ou I<''> no caso da falha.
-
-=cut
-
+# chamado internamente, nem toque nisso!
 sub join {
    my $self = shift;
    my ($room, $ref) = @_;
 
-   # tolera erro bobo
-   return 0 if $self->is_logged;
-   $_[0] =~ m%^http://batepapo\d\.uol\.com\.br:\d+/?%i ||
+   # arruma a URL da sala
+   $room = 'http://' . $room unless $room =~ m%^http://%i;
+   $room =~ m%^http://batepapo\d\.uol\.com\.br:\d+/?%i ||
       croak "join: URL inválida";
 
    # processar os parâmetros
@@ -599,7 +600,7 @@ sub join {
    $self->{header}->header ('Referer', $self->{ref});
 
    # envia "Join Server"
-   my $resp = $self->post ('', 'JS=1&USER='.$self->{user}.'&nickCor='.$self->{color}, $self->{header});
+   my $resp = $self->post ('', 'JS=1&USER='.$self->{user}.'&GZ=1&nickCor='.$self->{color}, $self->{header});
 
    # epa... o que aconteceu?
    return '' if $resp->is_error;
@@ -608,19 +609,25 @@ sub join {
    $self->{header}->header ('Referer', $room);
 
    # pega o !@#$%^& código em imagem...
-   $resp->content =~ m{<img src="(http://imgcode\.uol\.com\.br/.*?\.jpg)"}s ||
+   $resp->content =~ m/="([a-z0-9\-\_]{32})"\s+var/is ||
       croak "join: servidor enviou resposta inválida (URL da imagem-código não encontrada)";
 
    # retorna a URL com imagem-código
-   $self->{joined} = 1;
-   return $1;
+   return "http://imgcode.uol.com.br/$1.jpg";
 }
 
 
-=item C<login (CODE)>
+=item C<login (ROOM [, REF])>
 
-Completa I<login> na sala de bate-papo definida em C<join>. O parâmetro C<CODE>
-é o código de verificação obtido a partir da URL retornada pelo C<join>.
+Efetua I<login> na sala C<ROOM> de bate-papo. Parâmetro C<ROOM> consiste
+de uma string de formato C<"http://batepapo4.uol.com.br:3999/">. Se você for preguiçoso
+como eu, pode usar C<"batepapo4.uol.com.br:3999"> apenas. Parâmetro
+C<REF>, opcional, é o I<Referer>, o documento que continha o link para
+C<ROOM>. Se você omitir o C<REF>, valor
+I<'http://batepapo.uol.com.br/bp/excgi/salas_new.shl'>
+será usado automaticamente. Se você estiver usado C<list_subgrp> antes
+de C<join>, a URL de sub-grupo listado será usada como C<REF>.
+Leia mais sobre C<list_subgrp>.
 
 Retorna I<0> se houver falha e I<1> se tiver sucesso. A "falha" mais provável
 é que a sala esteja cheia. Utilize o C<login_error> para obter mais detalhes
@@ -629,16 +636,33 @@ sobre a falha ocorrida.
 =cut
 
 sub login {
-   my ($self, $code) = @_;
-
-   # erro grave!
-   croak "login: código de verificação inválido" if
-      (not defined $code) or
-      ($code eq '') or
-      (length ($code) != 4);
+   my $self = shift;
+   my ($room, $ref) = @_;
 
    # tolera erro bobo
-   return 0 if $self->is_logged or not $self->{joined};
+   if ($self->is_logged) {
+      $self->{err} = 0;
+      return 0;
+   }
+
+   # obtêm URL com imágem do código de verificação
+   my $imgcode = $self->join ($room, $ref);
+   return 0 unless $imgcode;
+
+   # checka o handler
+   unless ((defined $self->{imgcode_handler}) and
+           (ref ($self->{imgcode_handler}) eq 'CODE')) {
+      croak "login: handler para código de verificação inválido";
+   }
+
+   # processa a imagem
+   my $code = &{$self->{imgcode_handler}} ($imgcode);
+
+   # droga, faz o serviço de digitar certo pelo menos!
+   if ((not defined $code) or not ($code =~ /^[a-z0-9]{4}$/)) {
+      $self->{err} = 3;
+      return 0;
+   }
 
    # a grande macro...
    $self->verify ($code)        || return 0;
@@ -696,7 +720,7 @@ sub verify {
    my ($self, $code) = @_;
    my $resp;
    my $line = sprintf (
-      'TESTE=1&IMGCODEERROR=0&USER=%s&JS=1&nickCor=%d&avatar=%d&FASE=%%d&IMGCODEPSW=%s',
+      'IMGCODEERROR=0&USER=%s&JS=1&nickCor=%d&avatar=%d&FASE=%%d&IMGCODEPSW=%s',
       $self->{user}, $self->{color}, $self->{avatar}, $code,
    );
 
@@ -712,7 +736,7 @@ sub verify {
    }
 
    # 2-a fase
-   $resp = $self->post ('', sprintf ($line, 2), $self->{header});
+   $resp = $self->post ('', sprintf ('TESTE=1&'.$line, 2), $self->{header});
    # trata o eventual erro
    if ($resp->code != 200) {
       if ($resp->code == 302) {
@@ -727,7 +751,7 @@ sub verify {
    }
 
    # salva dados da sessão
-   $resp->content =~ /&ID=(.*?)&/ ||
+   $resp->content =~ /&ID=(\d+)&/ ||
       croak "join: servidor enviou resposta inválida (sem ID adquirido)";
    $self->{id} = $1;
    $self->{usid} = 'USER='.$self->{user}.'&ID='.$self->{id}.'&';
@@ -880,7 +904,7 @@ envia string I<'mensagem 2'> com atributos C<To> e C<Action> explicados abaixo
 
 =item 3
 
- $bot=>send (Msg => 'mensagem 3', To => 'TODOS', Action => 15);
+ $bot->send (Msg => 'mensagem 3', To => 'TODOS', Action => 15);
 
 o mesmo de cima para I<'mensagem 3'>
 
@@ -1145,7 +1169,6 @@ sub logout {
    # sempre deve zerar o $self->{logged}
    return 0 unless $self->is_logged;
    $self->{logged} = 0;
-   $self->{joined} = 0;
    delete $self->{err};
 
    # envia "Exit"
@@ -1229,6 +1252,18 @@ sub banner {
    return 1;
 }
 
+# o jeito mais prático de ler o código de verificação ;)
+sub default_imgcode_handler {
+   my $imgcode = shift;
+   my $code;
+   print "\n", '='x62, "\n",
+         "$imgcode\n";
+   print "4-digit code: ";
+   chomp ($code = <STDIN>);
+   print "="x62, "\n\n";
+   return $code;
+}
+
 
 # filtra os caracteres não permitidos mas mensagens HTTP
 sub ief {
@@ -1268,10 +1303,10 @@ Porém deixei de implementar coisas que me pareceram inúteis, tais como:
 
 incompatibilidade com C<Win32>
 
-Calma, calma, você B<pode> executar o C<UOLbot> numa plataforma C<Win32>.
+Calma, calma, você B<pode> executar o C<UOLbot> num plataforma C<Win32>.
 Porém, vi que I<as vezes> há falhas muito estranhas no C<LWP>. Uma hora
 tá tudo OK, outra hora não funciona. Eu fiz testes com
-C<ActivePerl 5.6.1 Build 630>, utilizando C<Windows 98> e C<Windows 98 SE>.
+C<ActivePerl 5.6.1 Build 632>, utilizando C<Windows 98> e C<Windows 98 SE>.
 O primeiro não apresentou falhas, o segundo apresentou raramente. Mas
 na minha opinião pessoal, eu não confiaria em B<nada> feito pela I<Micro$oft>.
 Não confiaria nem nos softwares livres rodando em cima de produtos da
@@ -1348,7 +1383,7 @@ de bate-papo e seus respectivos títulos.
 
 =head1 VERSÃO
 
-1.3
+1.4
 
 =cut
 
@@ -1380,6 +1415,12 @@ B<1.2a> I<(04/Mar/2002)> - atualizações na documentação.
 B<1.3> I<(27/Mar/2002)> - reestruturado o processo de login devido às alterações
 feitas nos servidores da UOL. Agora você deve dar um C<join> na sala escolhida,
 obter o código de verificação e completar operação com C<login>. Maldição!
+
+=item *
+
+B<1.4> I<(22/Jul/2002)> - Código levemente reestruturado para compatibilidade com
+módulo I<OCR> (para reconhecimento do código de verificação) que estou fazendo.
+Algumas correções menores também.
 
 =back
 
@@ -1425,7 +1466,7 @@ Desde que não haja infração do C<item 1>.
 
 Nome: Stanislaw Y. Pusep
 
-E-Mail: stanis@linuxmail.org
+E-Mail: stanis I<AT> linuxmail I<DOT> org
 
 Homepage: http://sysdlabs.hypermart.net/
 
