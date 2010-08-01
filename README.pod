@@ -36,82 +36,82 @@ Windows
   exit;
 
 
-=head1 DESCRIÃ‡ÃƒO
+=head1 DESCRIÇÃO
 
-O C<UOLbot> Ã© um mÃ³dulo Perl que implementa interface para webchat (batepapo) do
-UOL (http://www.uol.com.br/). Basicamente, a idÃ©ia Ã© poder acessar as funÃ§Ãµes
-comunicativas do chat B<de fora> do navegador. No caso, Ã  partir de um programa
-escrito em Perl. Um detalhe em destaque: a intenÃ§Ã£o Ã© implementar interface
-B<completa>. Por exemplo, clientes tais como Jane, UOLME e Chat-NÃ³ia 666
-implementam sÃ³ um pouco Ã  mais do que parte interativa. "O grosso" do trabalho
-em tais clientes Ã© feito pelas DLLs do C<Internet Explorer>. JÃ¡ o C<UOLbot> Ã©
-independente de C<Internet Explorer> assim como Ã© independente do C<Windows>
+O C<UOLbot> é um módulo Perl que implementa interface para webchat (batepapo) do
+UOL (http://www.uol.com.br/). Basicamente, a idéia é poder acessar as funções
+comunicativas do chat B<de fora> do navegador. No caso, à partir de um programa
+escrito em Perl. Um detalhe em destaque: a intenção é implementar interface
+B<completa>. Por exemplo, clientes tais como Jane, UOLME e Chat-Nóia 666
+implementam só um pouco à mais do que parte interativa. "O grosso" do trabalho
+em tais clientes é feito pelas DLLs do C<Internet Explorer>. Já o C<UOLbot> é
+independente de C<Internet Explorer> assim como é independente do C<Windows>
 como todo.
 
-EntÃ£o, conforme o prÃ³prio nome diz, vocÃª pode escrever bots de propaganda
-(robÃ´s de propaganda que andam de sala em sala enchendo o saco das pessoas)
-utilizando C<UOLbot>. VocÃª tambÃ©m pode fazer algo Ãºtil como o primeiro cliente
+Então, conforme o próprio nome diz, você pode escrever bots de propaganda
+(robôs de propaganda que andam de sala em sala enchendo o saco das pessoas)
+utilizando C<UOLbot>. Você também pode fazer algo útil como o primeiro cliente
 de batepapo UOL que seja I<cross-platform>. Fiz de tudo para tais tarefas sejam
-mais simplificadas possÃ­veis, apenas repare no exemplo acima ;)
+mais simplificadas possíveis, apenas repare no exemplo acima ;)
 
-Bom, qualquer coisa, esse projeto estÃ¡ I<quase> sempre em expansÃ£o. Comecei
+Bom, qualquer coisa, esse projeto está I<quase> sempre em expansão. Comecei
 aplicando uma engenharia reversa para saber como o
 I<Microsoft Internet Explorer 6.0> interage com servidores do UOL
-(sim, a lÃ³gica de operaÃ§Ã£o Ã© do IE do comeÃ§o ao fim), e atualmente
-tenho em mÃ£os um mÃ³dulo orientado Ã  objetos (hÃ­brido, para ser honesto) que
-faz virtualmente tudo o que B<vocÃª> faria num webchat.
+(sim, a lógica de operação é do IE do começo ao fim), e atualmente
+tenho em mãos um módulo orientado à objetos (híbrido, para ser honesto) que
+faz virtualmente tudo o que B<você> faria num webchat.
 
-I<Obs>: antes que me pergunte, "eu estou lendo em portuguÃªs aqui,
-entÃ£o por que C<send> e nÃ£o I<enviar>, ou C<logout> ao invÃ©s de I<sair>?"
-A razÃ£o Ã© simples: o "resto" do L<perl> estÃ¡ em inglÃªs, certo?
+I<Obs>: antes que me pergunte, "eu estou lendo em português aqui,
+então por que C<send> e não I<enviar>, ou C<logout> ao invés de I<sair>?"
+A razão é simples: o "resto" do L<perl> está em inglês, certo?
 Por mim, fica estranho ler e entender o que faz algo como
 
   next if $bot->enviar and not scalar $bot->usuarios;
 
 
-=head1 INTRODUÃ‡ÃƒO
+=head1 INTRODUÇÃO
 
-Agora, o princÃ­pio ativo. Antes de tudo, vocÃª deve criar uma instÃ¢ncia
+Agora, o princípio ativo. Antes de tudo, você deve criar uma instância
 do bot:
 
   my $bot = new UOLbot (Nick => 'uolbot');
 
-O parÃ¢metro I<Nick> especifica o nickname do bot.
-VocÃª pode passar outros, que serÃ£o descritos posteriormente.
-VocÃª tambÃ©m pode B<nÃ£o> passar nenhum, aÃ­ o seu bot serÃ¡ um
+O parâmetro I<Nick> especifica o nickname do bot.
+Você pode passar outros, que serão descritos posteriormente.
+Você também pode B<não> passar nenhum, aí o seu bot será um
 discreto "unnamed".
-VocÃª pode ter vÃ¡rias instÃ¢ncias, sÃ³ nÃ£o sei qual o sentido
-disso. VÃ¡rios robÃ´s para vÃ¡rias salas em um sÃ³ programa?
+Você pode ter várias instâncias, só não sei qual o sentido
+disso. Vários robôs para várias salas em um só programa?
 
-Pronto, vocÃª criou o seu bot... E agora? Ele deve entrar numa sala, nÃ©?
+Pronto, você criou o seu bot... E agora? Ele deve entrar numa sala, né?
 
   $bot->login ('batepapo4.uol.com.br:3999');
 
-(Ã³tima sala para propaganda, eheheh)
-AÃ­ vocÃª passa a URL da sala. Ã‰ o Ãºnico parÃ¢metro B<necessÃ¡rio>.
-Ã‰ claro que ter que saber essa URL Ã© um pÃ© no saco, vocÃª pode entrar na
-sala sÃ³ sabendo o seu nome/nÃºmero. Mas isso Ã© para depois.
+(ótima sala para propaganda, eheheh)
+Aí você passa a URL da sala. É o único parâmetro B<necessário>.
+É claro que ter que saber essa URL é um pé no saco, você pode entrar na
+sala só sabendo o seu nome/número. Mas isso é para depois.
 
-Opa, mas espere um pouco. VocÃª jÃ¡ deve ter percebido aqueles cÃ³digos de
-verificaÃ§Ã£o anti-spam, nÃ© (antes nÃ£o existia isso nÃ£o)... O que fazer
-agora? B<NADA>. Lhes apresento orgulhosamente o C<UOL::OCR>!!! Ã‰ um
+Opa, mas espere um pouco. Você já deve ter percebido aqueles códigos de
+verificação anti-spam, né (antes não existia isso não)... O que fazer
+agora? B<NADA>. Lhes apresento orgulhosamente o C<UOL::OCR>!!! É um
 sub-componente composto por filtros digitais de imagem e um programa de
 OCR (I<Optical Character Recognition>), atualmente o C<jocr>
-(http://jocr.sourceforge.net). Tal componente trata dos cÃ³digos de verificaÃ§Ã£o
-para vocÃª, e aparentemente muito bem ;)
+(http://jocr.sourceforge.net). Tal componente trata dos códigos de verificação
+para você, e aparentemente muito bem ;)
 
 Bom, e estando na sala, o que fazer? Falar!
 
   $bot->send ("Hello World!");
 
 "Oi mundo" C<:P>
-Sem comentÃ¡rios aqui.
+Sem comentários aqui.
 
-Quando vocÃª "falou" tudo o que quis, tchau para todos!
+Quando você "falou" tudo o que quis, tchau para todos!
 
   $bot->logout;  
 
-Isso Ã© o bÃ¡sico. Se nÃ£o entendeu, pare por aqui.
+Isso é o básico. Se não entendeu, pare por aqui.
 
 =head1 REQUISITOS
 
@@ -133,31 +133,31 @@ Image::Magick I<(opcional)>
 
 =item C<new ([ARGS])>
 
-Construtor para o bot. Retorna a referÃªncia para objeto C<UOL::bot>.
+Construtor para o bot. Retorna a referência para objeto C<UOL::bot>.
 Argumentos C<ARGS> devem ser passados em forma:
 
   new (Chave1 => 'valor1',
        Chave2 => 2);
 
-Note que alguns dos argumentos vocÃª poderÃ¡ alterar posteriormente
-com mÃ©todos apropriados, e outros nÃ£o.
-Argumentos vÃ¡lidos (B<todos> opcionais):
+Note que alguns dos argumentos você poderá alterar posteriormente
+com métodos apropriados, e outros não.
+Argumentos válidos (B<todos> opcionais):
 
 =over 4
 
 =item I<UA>
 
-referÃªncia para objeto C<LWP::UserAgent> externo (Ã© criada instÃ¢ncia interna por default)
+referência para objeto C<LWP::UserAgent> externo (é criada instância interna por default)
 
 =item I<Nick>
 
-o nickname (valor default Ã© I<"unnamed">)
+o nickname (valor default é I<"unnamed">)
 
 =item I<Color>
 
-a cor do nickname (valor default Ã© I<0>)
+a cor do nickname (valor default é I<0>)
 
-I<Obs>: valores possÃ­veis sÃ£o:
+I<Obs>: valores possíveis são:
 
   0 - Preto
   1 - Vermelho
@@ -169,29 +169,29 @@ I<Obs>: valores possÃ­veis sÃ£o:
 
 =item I<Avatar>
 
-define "carinha" na frente do nick (nÃºmero inteiro, para ser descoberto na tentativa e erro :(
+define "carinha" na frente do nick (número inteiro, para ser descoberto na tentativa e erro :(
 
-I<Obs>: a "carinha" sÃ³ vai aparecer se vocÃª for autenticado com C<auth>!
+I<Obs>: a "carinha" só vai aparecer se você for autenticado com C<auth>!
 
-I<Obs2>: pra tirar a "carinha" jÃ¡ definida, chame C<$bot-E<gt>avatar (-1)>.
+I<Obs2>: pra tirar a "carinha" já definida, chame C<$bot-E<gt>avatar (-1)>.
 
 =item I<Fast>
 
-se setado em I<1> faz C<UOLbot> pular passos desnecessÃ¡rios de autenticaÃ§Ã£o/login na sala.
-Pode fazer diferenÃ§a em conexÃµes lentas, porÃ©m pode gerar incompatibilidades, cuidado ao
+se setado em I<1> faz C<UOLbot> pular passos desnecessários de autenticação/login na sala.
+Pode fazer diferença em conexões lentas, porém pode gerar incompatibilidades, cuidado ao
 usar!
 
 =item I<Tries>
 
-nÃºmero de tentativas para processar/reentrar cÃ³digo de verificaÃ§Ã£o. Tenha em mente que o
-I<OCR> embutido pode errar para algum tipo de fonte/fundo/texto, porÃ©m quem sabe se na
-prÃ³xima ele acerta? Default Ã© I<3>.
+número de tentativas para processar/reentrar código de verificação. Tenha em mente que o
+I<OCR> embutido pode errar para algum tipo de fonte/fundo/texto, porém quem sabe se na
+próxima ele acerta? Default é I<3>.
 
 =item I<Auth_Magic>
 
-preconfigura o I<cookie mÃ¡gico> que UOL utiliza para saber se o usuÃ¡rio Ã© registrado.
-Uma boa idÃ©ia Ã© nÃ£o tocar nisso, se quiser experimentar, primeiro dÃª um C<auth> com
-login/senha vÃ¡lidos, depois dÃª um
+preconfigura o I<cookie mágico> que UOL utiliza para saber se o usuário é registrado.
+Uma boa idéia é não tocar nisso, se quiser experimentar, primeiro dê um C<auth> com
+login/senha válidos, depois dê um
 
   print $bot->auth_magic, "\n";
 
@@ -201,17 +201,17 @@ depois copie o que for impresso e cole no
 
 =item I<ImgCode_Handler>
 
-referÃªncia para a rotina que vai processar a imagem com cÃ³digo de verificaÃ§Ã£o.
-A minha sugestÃ£o Ã© que vocÃª nÃ£o toque nisso. O default Ã© tentar carregar um
-I<OCR> aqui, se falhar, entÃ£o a URL da imagem com cÃ³digo de verificaÃ§Ã£o Ã© impressa
-e vocÃª (usuÃ¡rio) tem que ler/digitar... Argh. De qualquer forma, a sintaxe Ã©:
+referência para a rotina que vai processar a imagem com código de verificação.
+A minha sugestão é que você não toque nisso. O default é tentar carregar um
+I<OCR> aqui, se falhar, então a URL da imagem com código de verificação é impressa
+e você (usuário) tem que ler/digitar... Argh. De qualquer forma, a sintaxe é:
 
   ImgCode_Handler => \&my_imgcode_handler
   ...
   sub my_imgcode_handler {
      my ($req, $ua) = @_;
-     # $req Ã© istÃ¢ncia HTTP::Request
-     # $ua Ã© instÃ¢ncia LWP::UserAgent
+     # $req é istância HTTP::Request
+     # $ua é instância LWP::UserAgent
      my $resp = $ua->request ($req);
      ...
      return $code;
@@ -219,14 +219,14 @@ e vocÃª (usuÃ¡rio) tem que ler/digitar... Argh. De qualquer forma, a sintaxe Ã©:
 
 No caso:
 
-I<$req> Ã© instÃ¢ncia C<HTTP::Request> da imagem-cÃ³digo
-I<$ua> Ã© instÃ¢ncia C<LWP::UserAgent> atualmente usada pelo C<UOLbot>
-I<$code> Ã© cÃ³digo de 4 caracteres [a-z0-9]
+I<$req> é instância C<HTTP::Request> da imagem-código
+I<$ua> é instância C<LWP::UserAgent> atualmente usada pelo C<UOLbot>
+I<$code> é código de 4 caracteres [a-z0-9]
 
 =item I<Listen_Handler>
 
-referÃªncia para a rotina que vai processar as
-informaÃ§Ãµes recebidas da sala (indefinido por default).
+referência para a rotina que vai processar as
+informações recebidas da sala (indefinido por default).
 Por exemplo:
 
   Listen_Handler => sub { print $_[0] }
@@ -242,18 +242,18 @@ imprime qualquer coisa recebida e
   }
 
 define a sub-rotina I<listen_handler> como handler de 'escuta'.
-Nesse caso, variÃ¡vel I<$data> recebe pacotes com cÃ³digo HTML recebidos.
+Nesse caso, variável I<$data> recebe pacotes com código HTML recebidos.
 
-I<Obs>: lembre que nem sempre hÃ¡ uma mensagem em um pacote. O servidor
-(ou buffer do sistema operacional) pode juntar vÃ¡rios pacotes num sÃ³.
-
-=back
+I<Obs>: lembre que nem sempre há uma mensagem em um pacote. O servidor
+(ou buffer do sistema operacional) pode juntar vários pacotes num só.
 
 =back
 
-=head1 MÃ‰TODOS
+=back
 
-Os mÃ©todos do C<UOLbot> sÃ£o:
+=head1 MÉTODOS
+
+Os métodos do C<UOLbot> são:
 
 =over 4
 
@@ -275,21 +275,21 @@ Os mÃ©todos do C<UOLbot> sÃ£o:
 
 =item C<listen_handler>
 
-MÃ©todos para ler/definir os parÃ¢metros definidos pelo C<new>.
+Métodos para ler/definir os parâmetros definidos pelo C<new>.
 
-I<Obs>: VocÃª pode ler os valores a qualquer momento, mas sÃ³ poderÃ¡
-definir quando a instÃ¢ncia I<nÃ£o estiver logada> com C<login>!
+I<Obs>: Você pode ler os valores a qualquer momento, mas só poderá
+definir quando a instância I<não estiver logada> com C<login>!
 
 =item C<list_subgrp (SUBGRP)>
 
 Enumera as salas de bate-papo de um sub-grupo C<SUBGRP>. O tal sub-grupo
-Ã© o documento onde nomes das salas, suas URLs e suas lotaÃ§Ãµes sÃ£o fornecidos.
-C<list_subgrp> Ã© simplesmente uma interface para esse documento.
-ParÃ¢metro C<SUBGRP> Ã© uma string com URL de formato
+é o documento onde nomes das salas, suas URLs e suas lotações são fornecidos.
+C<list_subgrp> é simplesmente uma interface para esse documento.
+Parâmetro C<SUBGRP> é uma string com URL de formato
 I<'http://batepapo.uol.com.br/bp/excgi/salas_new.cgi?ID=idim_he.conf'>
-ou entÃ£o simplesmente I<'idim_he.conf'>. Os dois sÃ£o equivalentes.
-Quando vocÃª usa C<list_subgrp> antes de C<login>, C<SUBGRP> Ã© salvo e
-utilizado como C<REF> de C<login> automaticamente. O mÃ©todo retorna
+ou então simplesmente I<'idim_he.conf'>. Os dois são equivalentes.
+Quando você usa C<list_subgrp> antes de C<login>, C<SUBGRP> é salvo e
+utilizado como C<REF> de C<login> automaticamente. O método retorna
 um array de hashes se tiver sucesso e I<()> se houver falha. O array
 retornado pode ser expandido com:
 
@@ -300,13 +300,13 @@ retornado pode ser expandido com:
            $room->{Load}, "\n\n";
   }
 
-onde C<URL> Ã© a URL da sala de bate-papo, C<Title> Ã© o tÃ­tulo dela e
-C<Load> Ã© o nÃºmero de pessoas na sala
+onde C<URL> é a URL da sala de bate-papo, C<Title> é o título dela e
+C<Load> é o número de pessoas na sala
 (0-40, -1 significa I<"sala lotada">).
 
 =item C<search (STRING)>
 
-Busca por usuÃ¡rio com C<STRING> contido no nickname em B<todas> as salas. Retorna I<()> caso
+Busca por usuário com C<STRING> contido no nickname em B<todas> as salas. Retorna I<()> caso
 nenhum seja encontrado ou I<array> semelhante ao do C<list_subgrp>:
 
   my @room = $bot->search ('uolbot');
@@ -317,8 +317,8 @@ nenhum seja encontrado ou I<array> semelhante ao do C<list_subgrp>:
            $room->{Load}, "\n\n";
   }
 
-Onde I<Nick> refere o nickname completo do usuÃ¡rio encontrado, I<URL> Ã© o endereÃ§o da sala onde
-o usuÃ¡rio atualmente se encontra, I<Title> Ã© o tÃ­tulo da mesma (cortado, foi mal) e I<Load> Ã©
+Onde I<Nick> refere o nickname completo do usuário encontrado, I<URL> é o endereço da sala onde
+o usuário atualmente se encontra, I<Title> é o título da mesma (cortado, foi mal) e I<Load> é
 quantidade de pessoas presentes na mesma sala.
 
 =item C<brief (ROOM)>
@@ -329,7 +329,7 @@ quantidade de pessoas presentes na mesma sala.
 
 =item 1
 
-guarda a lista com nomes de usuÃ¡rios para depois ser vista com C<users>
+guarda a lista com nomes de usuários para depois ser vista com C<users>
 
 =item 2
 
@@ -343,72 +343,72 @@ retorna I<1>
 
 =item C<auth ([USER, PASS])>
 
-Autentica usuÃ¡rio registrado. Permite entrar nas salas com mais de 30 pessoas e usar
-"carinha" na frente do nick. C<USER> Ã© o nome de usuÃ¡rio em forma I<'nome@uol.com.br'>
-e C<PASS> Ã© a senha. Agora, o mais velho I<hack> de sistema de chat... Omita C<USER>
-e C<PASS> e terÃ¡s todos os privilÃ©gios de um usuÃ¡rio registrado sem ser um ;)
+Autentica usuário registrado. Permite entrar nas salas com mais de 30 pessoas e usar
+"carinha" na frente do nick. C<USER> é o nome de usuário em forma I<'nome@uol.com.br'>
+e C<PASS> é a senha. Agora, o mais velho I<hack> de sistema de chat... Omita C<USER>
+e C<PASS> e terás todos os privilégios de um usuário registrado sem ser um ;)
 
-Retorna I<0> se houver falha (username/senha invÃ¡lidos) e I<1> se tiver sucesso.
+Retorna I<0> se houver falha (username/senha inválidos) e I<1> se tiver sucesso.
 
-I<Obs>: vocÃª deve autenticar B<antes> de efetuar C<login>!
+I<Obs>: você deve autenticar B<antes> de efetuar C<login>!
 
-I<Obs2>: C<auth> utiliza conexÃ£o encriptada via SSL automaticamente quando o mÃ³dulo
-C<Crypt::SSLeay> Ã© encontrado no sistema. Sem esse mÃ³dulo, a conexÃ£o efetuada Ã©
+I<Obs2>: C<auth> utiliza conexão encriptada via SSL automaticamente quando o módulo
+C<Crypt::SSLeay> é encontrado no sistema. Sem esse módulo, a conexão efetuada é
 insegura e a senha pode ser vista por pessoas mal-intencionadas! Duvido muito,
 mas o que custa fazer direito?!
 
 =item C<login (ROOM [, REF])>
 
 Efetua I<login> na sala C<ROOM> de bate-papo. Chama internamente I<imgcode_handler>.
-ParÃ¢metro C<ROOM> consiste de uma string de formato C<"http://batepapo4.uol.com.br:3999/">.
-Se vocÃª for preguiÃ§oso como eu, pode usar C<"batepapo4.uol.com.br:3999"> apenas. ParÃ¢metro
-C<REF>, opcional, Ã© o I<Referer>, o documento que continha o link para
-C<ROOM>. Se vocÃª omitir o C<REF>, valor
+Parâmetro C<ROOM> consiste de uma string de formato C<"http://batepapo4.uol.com.br:3999/">.
+Se você for preguiçoso como eu, pode usar C<"batepapo4.uol.com.br:3999"> apenas. Parâmetro
+C<REF>, opcional, é o I<Referer>, o documento que continha o link para
+C<ROOM>. Se você omitir o C<REF>, valor
 I<'http://batepapo.uol.com.br/bp/excgi/salas_new.shl'>
-serÃ¡ usado automaticamente. Se vocÃª estiver usado C<list_subgrp> ou C<search> antes
-de C<login>, a URL de sub-grupo listado serÃ¡ usada como C<REF>.
+será usado automaticamente. Se você estiver usado C<list_subgrp> ou C<search> antes
+de C<login>, a URL de sub-grupo listado será usada como C<REF>.
 Leia mais sobre C<list_subgrp>/C<search>.
 
-Retorna I<0> se houver falha e I<1> se tiver sucesso. A "falha" mais provÃ¡vel
-Ã© que a sala esteja cheia. Utilize o C<login_error> para obter mais detalhes
+Retorna I<0> se houver falha e I<1> se tiver sucesso. A "falha" mais provável
+é que a sala esteja cheia. Utilize o C<login_error> para obter mais detalhes
 sobre a falha ocorrida.
 
 =item C<is_logged>
 
-Retorna I<nÃ£o-0> se o bot estiver atualmente numa sala de bate-papo e I<0> caso contrÃ¡rio.
+Retorna I<não-0> se o bot estiver atualmente numa sala de bate-papo e I<0> caso contrário.
 
-I<Detalhes TÃ©cnicos>: Para ser exato, retorna o nÃºmero de tentativas de efetuar a verificaÃ§Ã£o.
+I<Detalhes Técnicos>: Para ser exato, retorna o número de tentativas de efetuar a verificação.
 
 =item C<encode>
 
-Retorna a parte "encriptada" da URL da Ãºltima imagem processada contendo cÃ³digo de verificaÃ§Ã£o.
+Retorna a parte "encriptada" da URL da última imagem processada contendo código de verificação.
 
 =item C<decode>
 
-Retorna o cÃ³digo lido.
+Retorna o código lido.
 
 =item C<is_auth>
 
-Retorna I<1> se o bot estiver autenticado como usuÃ¡rio registrado do UOL.
+Retorna I<1> se o bot estiver autenticado como usuário registrado do UOL.
 
 =item C<login_error>
 
-Retorna o cÃ³digo do erro durante login:
+Retorna o código do erro durante login:
 
   0     - sucesso
-  1     - nickname jÃ¡ foi utilizado
-  2     - sala estÃ¡ cheia
-  3     - cÃ³digo de verificaÃ§Ã£o incorreto
+  1     - nickname já foi utilizado
+  2     - sala está cheia
+  3     - código de verificação incorreto
   undef - erro desconhecido (ver valor de $!)
 
 =item C<users>
 
-Retorna array de nicknames de usuÃ¡rios atualmente presentes na sala
-de bate-papo. Os dados sÃ£o atualizados toda vez que vocÃª efetua C<login>,
-C<send> ou C<brief>. Desculpe, nÃ£o fui eu quem inventou isso... Retorna no mÃ­nimo
-o prÃ³prio nickname (a sala nÃ£o estÃ¡ vazia se I<vocÃª> estÃ¡ lÃ¡ C<;)> ou I<()>
-no caso de falha. Detalhe: se vocÃª usou C<brief>, a sala B<pode> estar vazia
-portando I<()> B<nÃ£o> significa erro.
+Retorna array de nicknames de usuários atualmente presentes na sala
+de bate-papo. Os dados são atualizados toda vez que você efetua C<login>,
+C<send> ou C<brief>. Desculpe, não fui eu quem inventou isso... Retorna no mínimo
+o próprio nickname (a sala não está vazia se I<você> está lá C<;)> ou I<()>
+no caso de falha. Detalhe: se você usou C<brief>, a sala B<pode> estar vazia
+portando I<()> B<não> significa erro.
 
 =item C<send ([MSG] [, ATTR])>
 
@@ -438,24 +438,24 @@ o mesmo de cima para I<'mensagem 3'>
 
  $bot->send ();
 
-sintaxe mais obscura, nÃ£o envia B<nada>, apenas atualiza a lista que
-pode ser obtida com mÃ©todo C<users>. De novo, nÃ£o fui eu quem inventou!
+sintaxe mais obscura, não envia B<nada>, apenas atualiza a lista que
+pode ser obtida com método C<users>. De novo, não fui eu quem inventou!
 
 =back
 
-Agora, sobre atributos C<ATTR>. SÃ£o todos opcionais
-(forma C<Chave =E<gt> 'Valor'>), aqui estÃ¡ a lista
-com uma breve explicaÃ§Ã£o:
+Agora, sobre atributos C<ATTR>. São todos opcionais
+(forma C<Chave =E<gt> 'Valor'>), aqui está a lista
+com uma breve explicação:
 
 =over 4
 
 =item I<Msg>
 
-a mensagem em si, string (sÃ³ pode ser usado com I<sintaxe 3>, ignorado na I<sintaxe 2>!)
+a mensagem em si, string (só pode ser usado com I<sintaxe 3>, ignorado na I<sintaxe 2>!)
 
 =item I<Action>
 
-aÃ§Ã£o, valor inteiro. AÃ§Ãµes possÃ­veis:
+ação, valor inteiro. Ações possíveis:
 
   0  - fala para (default)
   1  - pergunta para
@@ -470,37 +470,37 @@ aÃ§Ã£o, valor inteiro. AÃ§Ãµes possÃ­veis:
   10 - flerta com
   11 - entusiasma-se com
   12 - ri de
-  13 - dÃ¡ um fora em
+  13 - dá um fora em
   14 - briga com
   15 - grita com
   16 - xinga
 
   18 - IGNORAR mensagens de
-  19 - sÃ³ receber mensagens de
-  20 - nÃ£o IGNORAR mais
+  19 - só receber mensagens de
+  20 - não IGNORAR mais
 
 =item I<To>
 
-o nickname do receptor da aÃ§Ã£o I<Action>, string. Valor default Ã© I<'TODOS'>.
+o nickname do receptor da ação I<Action>, string. Valor default é I<'TODOS'>.
 
-I<Obs1>: B<nÃ£o necessariamente> Ã© alguÃ©m que esteja na sala. Isto Ã©, vocÃª
+I<Obs1>: B<não necessariamente> é alguém que esteja na sala. Isto é, você
 pode fazer:
 
-  $bot->send ('bots do UOL, unÃ­-vos!', To => 'bots renegados');
+  $bot->send ('bots do UOL, uní-vos!', To => 'bots renegados');
 
-B<desde que> I<nÃ£o> seja uma mensagem reservada (C<Reserved =E<gt> 1>)!
+B<desde que> I<não> seja uma mensagem reservada (C<Reserved =E<gt> 1>)!
 
-I<Obs2>: independentemente do valor do I<To>, todos os usuÃ¡rios da sala
-irÃ£o ler a mensagem. Para mensagens privadas, use I<Reserved>.
+I<Obs2>: independentemente do valor do I<To>, todos os usuários da sala
+irão ler a mensagem. Para mensagens privadas, use I<Reserved>.
 
 =item I<Reserved>
 
-pode ser I<1> ou I<0>. Quando I<1>, a mensagem Ã© enviada reservadamente
-para nickname I<To>. Valor default Ã© I<0>.
+pode ser I<1> ou I<0>. Quando I<1>, a mensagem é enviada reservadamente
+para nickname I<To>. Valor default é I<0>.
 
 =item I<Sound>
 
-som a ser enviado, inteiro. Sons possÃ­veis:
+som a ser enviado, inteiro. Sons possíveis:
 
   0  - nenhum (default)
   14 - Ahn???
@@ -514,20 +514,20 @@ som a ser enviado, inteiro. Sons possÃ­veis:
   22 - Smack!
   23 - Susto
   24 - Telefone
-  25 - TÃ´lÃ´ca
+  25 - Tôlôca
   26 - Tosse
-  07 - Como Ã©?
-  08 - NÃ£o entendi
+  07 - Como é?
+  08 - Não entendi
 
 =item I<Icon>
 
-Ã­cone a ser enviado, inteiro. Ãcones possÃ­veis:
+ícone a ser enviado, inteiro. Ícones possíveis:
 
   0  - nenhum (default)
   38 - Assustado
   27 - Bocejo
   23 - Careta
-  30 - DentuÃ§o
+  30 - Dentuço
   18 - Desejo
   31 - Eca !
   32 - Gargalhada
@@ -546,44 +546,44 @@ som a ser enviado, inteiro. Sons possÃ­veis:
 
 Retorna I<0> se houver falha e I<1> se tiver sucesso.
 
-I<Obs>: B<aparentemente> o servidor nÃ£o aceita mensagens E<gt> 200 bytes.
+I<Obs>: B<aparentemente> o servidor não aceita mensagens E<gt> 200 bytes.
 
 =item C<scroll (TIMEOUT)>
 
-I<Obs>: Provavelmente a parte mais chatinha... Mas indispensÃ¡vel se vocÃª
-quer comunicaÃ§Ã£o B<bidirecional>, isto Ã©, o seu bot envia B<E> recebe dados.
+I<Obs>: Provavelmente a parte mais chatinha... Mas indispensável se você
+quer comunicação B<bidirecional>, isto é, o seu bot envia B<E> recebe dados.
 
 O C<scroll> visa limpar buffers de entrada e enviar dados para sub-rotina
 definida em C<Listen_Handler> (leia mais sobre argumentos de C<new>). Se o
-I<listen_handler> for omitido entÃ£o os buffers serÃ£o limpos e a rotina
-retornarÃ¡ sucesso (I<1>). SÃ³ retorna I<0> se houver quebra inesperada
-de conexÃ£o.
+I<listen_handler> for omitido então os buffers serão limpos e a rotina
+retornará sucesso (I<1>). Só retorna I<0> se houver quebra inesperada
+de conexão.
 
-O parÃ¢metro C<TIMEOUT> Ã© o tempo que o C<scroll> deva esperar atÃ©
+O parâmetro C<TIMEOUT> é o tempo que o C<scroll> deva esperar até
 retornar caso o buffer esteja vazio, em segundos. Resumindo,
 C<scroll()> ou C<scroll(0)> retorna imediatamente (timeout 0).
 C<scroll(10)> aguarda 10 segundos pelo dado. C<scroll(-1)> pausa o programa
-atÃ© que um dado apareÃ§a no buffer.
+até que um dado apareça no buffer.
 
-O C<scroll> Ã© chamado automaticamente pelos mÃ©todos C<login>, C<logout>
-e C<send>, portando, nÃ£o hÃ¡ como o seu C<Listen_Handler> perder algum dado.
-PorÃ©m, se vocÃª quiser mais controle, rode um C<scroll> com I<timeout>
-razoÃ¡vel sempre que estiver esperando alguma resposta do servidor.
+O C<scroll> é chamado automaticamente pelos métodos C<login>, C<logout>
+e C<send>, portando, não há como o seu C<Listen_Handler> perder algum dado.
+Porém, se você quiser mais controle, rode um C<scroll> com I<timeout>
+razoável sempre que estiver esperando alguma resposta do servidor.
 
-I<Obs>: AlguÃ©m aÃ­ pensou L<fork>? Acredite em mim, B<nÃ£o> vale a pena!
+I<Obs>: Alguém aí pensou L<fork>? Acredite em mim, B<não> vale a pena!
 Eu I<comecei> a desenvolver bot bifurcado, com um I<child> para entrada
-(rodando sÃ³ C<while ($bot-E<gt>scroll(-1)) { ... }>) e outro para saÃ­da
-(rodando C<$bot-E<gt>send(...)>). A sincronizaÃ§Ã£o dos dois virou um inferno e o
-L<ActivePerl>, meu plataforma principal, nÃ£o era muito amigo do L<fork>.
-Se vocÃª pensar um pouco, verÃ¡ que o problema em questÃ£o Ã© totalmente
-linear, nunca duas aÃ§Ãµes sÃ£o feitas em paralelo. Agora, se vocÃª estiver
-usando plataforma L<UNIX> e nÃ£o quiser se preocupar onde pÃ´r o C<scroll>,
+(rodando só C<while ($bot-E<gt>scroll(-1)) { ... }>) e outro para saída
+(rodando C<$bot-E<gt>send(...)>). A sincronização dos dois virou um inferno e o
+L<ActivePerl>, meu plataforma principal, não era muito amigo do L<fork>.
+Se você pensar um pouco, verá que o problema em questão é totalmente
+linear, nunca duas ações são feitas em paralelo. Agora, se você estiver
+usando plataforma L<UNIX> e não quiser se preocupar onde pôr o C<scroll>,
 coloque antes do C<login>:
 
   $SIG{ALRM} = sub { $bot->scroll; alarm 1 };
   alarm 1;
 
-Se vocÃª estÃ¡ vendo essa tÃ©cnica pela 1-a vez, conforme-se com o que jÃ¡ tem.
+Se você está vendo essa técnica pela 1-a vez, conforme-se com o que já tem.
 
 =item C<logout>
 
@@ -595,75 +595,75 @@ I<1> se tiver sucesso.
 
 =head1 BUGS
 
-Testei rigorosamente esse mÃ³dulo, afinal por que a idÃ©ia Ã© que um B<bot>
-rode 24 horas por dia 7 dias por semana I<sem manutenÃ§Ã£o>.
+Testei rigorosamente esse módulo, afinal por que a idéia é que um B<bot>
+rode 24 horas por dia 7 dias por semana I<sem manutenção>.
 
-PorÃ©m sempre hÃ¡ coisas que nÃ£o planejamos afinal, tais como:
+Porém sempre há coisas que não planejamos afinal, tais como:
 
 =over 4
 
 =item *
 
-organizaÃ§Ã£o estranha de mÃ³dulos/mÃ©todos
+organização estranha de módulos/métodos
 
-Ã‰ resultado dificilmente evitÃ¡vel do progresso do C<UOLbot>. ComeÃ§a-se
-de um jeito, aÃ­ muda-se de idÃ©ia e termina de um jeito totalmente diferente.
-Com certeza vocÃª deve estar se perguntando algo do tipo: "mas para quÃª dar
-um I<nick> Ã  instÃ¢ncia que vai apenas checkar a sala?" ou entÃ£o: "nÃ£o seria
-mais fÃ¡cil encapsular o endereÃ§o da sala em C<HTTP::Request> por exemplo, 
-afinal vira e mexe aparece URL de um jeito ou de outro!". A pergunta Ã©:
-a B<funcionalidade> Ã© prejudicada? Caso contrÃ¡rio, para que perder tempo
-arrumando coisa insignificante, afinal, nÃ£o Ã© um cÃ³digo B<para massas> ;)
+É resultado dificilmente evitável do progresso do C<UOLbot>. Começa-se
+de um jeito, aí muda-se de idéia e termina de um jeito totalmente diferente.
+Com certeza você deve estar se perguntando algo do tipo: "mas para quê dar
+um I<nick> à instância que vai apenas checkar a sala?" ou então: "não seria
+mais fácil encapsular o endereço da sala em C<HTTP::Request> por exemplo, 
+afinal vira e mexe aparece URL de um jeito ou de outro!". A pergunta é:
+a B<funcionalidade> é prejudicada? Caso contrário, para que perder tempo
+arrumando coisa insignificante, afinal, não é um código B<para massas> ;)
 
 =item *
 
 incompatibilidade com C<Win32>
 
-Calma, calma, vocÃª B<pode> executar o C<UOLbot> num plataforma C<Win32>.
-O grande inconveniente Ã© eu nÃ£o ter o I<port> do C<jocr> necessÃ¡rio e
-biblioteca C<Image::Magick> para testar funÃ§Ãµes I<OCR>...
-AliÃ¡s, vi que I<as vezes> hÃ¡ falhas muito estranhas no C<LWP>. Uma hora
-tÃ¡ tudo OK, outra hora nÃ£o funciona. Eu fiz testes com
+Calma, calma, você B<pode> executar o C<UOLbot> num plataforma C<Win32>.
+O grande inconveniente é eu não ter o I<port> do C<jocr> necessário e
+biblioteca C<Image::Magick> para testar funções I<OCR>...
+Aliás, vi que I<as vezes> há falhas muito estranhas no C<LWP>. Uma hora
+tá tudo OK, outra hora não funciona. Eu fiz testes com
 C<ActivePerl 5.6.1 Build 632>, utilizando C<Windows 98>, C<Windows 98 SE>
 e C<Windows XP Professional>.
-O primeiro e o terceiro nÃ£o apresentaram falhas, o segundo apresentou raramente. Mas
-na minha opiniÃ£o pessoal, eu nÃ£o confiaria em B<nada> feito pela I<Micro$oft>.
-NÃ£o confiaria nem nos softwares livres rodando em cima de produtos da
+O primeiro e o terceiro não apresentaram falhas, o segundo apresentou raramente. Mas
+na minha opinião pessoal, eu não confiaria em B<nada> feito pela I<Micro$oft>.
+Não confiaria nem nos softwares livres rodando em cima de produtos da
 I<Micro$oft>. Portando, aqui vai uma dica que vai te livrar de muitos problemas:
 B<use Linux>.
 
 =item *
 
-tolerÃ¢ncia Ã  falhas humanas
+tolerância à falhas humanas
 
-O mÃ­nimo esperado do usuÃ¡rio Ã© que passe parÃ¢metros corretos; nÃ£o passe
-string onde um nÃºmero Ã© esperado e nem passe expressÃ£o regular onde era
-para pÃ´r referÃªncia ao cÃ³digo...
+O mínimo esperado do usuário é que passe parâmetros corretos; não passe
+string onde um número é esperado e nem passe expressão regular onde era
+para pôr referência ao código...
 
-Ainda assim, fiz o necessÃ¡rio para proteger o usuÃ¡rio contra dar um
-C<logout> antes que seja feito um C<login>, portanto nÃ£o se desanime.
+Ainda assim, fiz o necessário para proteger o usuário contra dar um
+C<logout> antes que seja feito um C<login>, portanto não se desanime.
 
 =item *
 
 utilizar um proxy HTTP
 
-Grande maioria dos proxies pÃºblicos (os normalmente utilizados para anonimizar
-acessos) nÃ£o deixa conectar nas portas nÃ£o-HTTP. B<Nenhuma> das salas de bate-papo
-reside na porta HTTP (80). E entÃ£o?
+Grande maioria dos proxies públicos (os normalmente utilizados para anonimizar
+acessos) não deixa conectar nas portas não-HTTP. B<Nenhuma> das salas de bate-papo
+reside na porta HTTP (80). E então?
 
 =back
 
 Outra coisa... Olha a data desse arquivo. B<Nessa> data C<UOLbot> estava
-funcionando, pode ter certeza. Se nÃ£o estÃ¡ agora, Ã© porque pessoal do UOL
-alterou o sistema de webchat. Sinto muitÃ­ssimo... O que vocÃª tem a fazer Ã©
-ou procurar versÃ£o mais atual de C<UOLbot> ou adaptar o cÃ³digo desse aqui.
-NÃ£o deve ser difÃ­cil, fiz cÃ³digo o mais claro e limpo que pude, atÃ© comentei
-tudo (Ã´Ã´Ã´)!
+funcionando, pode ter certeza. Se não está agora, é porque pessoal do UOL
+alterou o sistema de webchat. Sinto muitíssimo... O que você tem a fazer é
+ou procurar versão mais atual de C<UOLbot> ou adaptar o código desse aqui.
+Não deve ser difícil, fiz código o mais claro e limpo que pude, até comentei
+tudo (ôôô)!
 
 O mesmo se aplica a qualquer valor ou tabela citados aqui. O UOL muda
-constantemente o seu sistema de webchat, fazer o quÃª...
+constantemente o seu sistema de webchat, fazer o quê...
 
-=head1 REFERÃŠNCIAS
+=head1 REFERÊNCIAS
 
 =over 4
 
@@ -673,13 +673,13 @@ L<LWP> - Library for WWW access in Perl
 
 =back
 
-VÃ¡rios exemplos distribuÃ­dos junto com o mÃ³dulo:
+Vários exemplos distribuídos junto com o módulo:
 
 =over 4
 
 =item F<simples.pl>
 
-a aplicaÃ§Ã£o mais simples; listar um sub-grupo, entrar na sala #15,
+a aplicação mais simples; listar um sub-grupo, entrar na sala #15,
 repetir mensagem 5 vezes, sair.
 
 =item F<crawler.pl>
@@ -690,60 +690,60 @@ e deixa uma mensagem.
 =item F<list.pl>
 
 busca em sub-grupos especificados e retorna lista de URLs de salas
-de bate-papo e seus respectivos tÃ­tulos.
+de bate-papo e seus respectivos títulos.
 
 =back
 
-=head1 VERSÃƒO
+=head1 VERSÃO
 
 2.02
 
-=head1 HISTÃ“RICO
+=head1 HISTÓRICO
 
 =over 4
 
 =item *
 
-B<1.0> I<(25/Jan/2002)> - primeira versÃ£o funcional.
+B<1.0> I<(25/Jan/2002)> - primeira versão funcional.
 
 =item *
 
-B<1.1> I<(09/Fev/2002)> - utilizado o C<Carp::croak> para erros de usuÃ¡rio e
-adicionado o mÃ©todo C<brief>. CorreÃ§Ãµes menores na documentaÃ§Ã£o.
+B<1.1> I<(09/Fev/2002)> - utilizado o C<Carp::croak> para erros de usuário e
+adicionado o método C<brief>. Correções menores na documentação.
 
 =item *
 
-B<1.2> I<(03/Mar/2002)> - adicionados mÃ©todos C<auth> e C<avatar> (para tirar
-proveito de ser usuÃ¡rio registrado do UOL ;).
+B<1.2> I<(03/Mar/2002)> - adicionados métodos C<auth> e C<avatar> (para tirar
+proveito de ser usuário registrado do UOL ;).
 
 =item *
 
-B<1.2a> I<(04/Mar/2002)> - atualizaÃ§Ãµes na documentaÃ§Ã£o.
+B<1.2a> I<(04/Mar/2002)> - atualizações na documentação.
 
 =item *
 
-B<1.3> I<(27/Mar/2002)> - reestruturado o processo de login devido Ã s alteraÃ§Ãµes
-feitas nos servidores do UOL. Agora vocÃª deve dar um C<join> na sala escolhida,
-obter o cÃ³digo de verificaÃ§Ã£o e completar operaÃ§Ã£o com C<login>. MaldiÃ§Ã£o!
+B<1.3> I<(27/Mar/2002)> - reestruturado o processo de login devido às alterações
+feitas nos servidores do UOL. Agora você deve dar um C<join> na sala escolhida,
+obter o código de verificação e completar operação com C<login>. Maldição!
 
 =item *
 
-B<1.4> I<(22/Jul/2002)> - CÃ³digo levemente reestruturado para compatibilidade com
-mÃ³dulo I<OCR> (para reconhecimento do cÃ³digo de verificaÃ§Ã£o) que estou fazendo.
-Algumas correÃ§Ãµes menores tambÃ©m.
+B<1.4> I<(22/Jul/2002)> - Código levemente reestruturado para compatibilidade com
+módulo I<OCR> (para reconhecimento do código de verificação) que estou fazendo.
+Algumas correções menores também.
 
 =item *
 
-B<2.0> I<(04/Ago/2002)> - CÃ³digo fortemente reestruturado. Muitas mudanÃ§as.
-MÃ³dulo C<UOL::OCR> incluÃ­do.
+B<2.0> I<(04/Ago/2002)> - Código fortemente reestruturado. Muitas mudanças.
+Módulo C<UOL::OCR> incluído.
 
 =item *
 
-B<2.01> I<(06/Dez/2002)> - CorreÃ§Ã£o menor devido Ã  atualizaÃ§Ã£o de protocolo nos servidores do UOL.
+B<2.01> I<(06/Dez/2002)> - Correção menor devido à atualização de protocolo nos servidores do UOL.
 
 =item *
 
-B<2.02> I<(25/Mai/2003)> - Arrumado o repentinamente surgido problema com "trailers" de linha. Agora estÃ¡ 100% IE :).
+B<2.02> I<(25/Mai/2003)> - Arrumado o repentinamente surgido problema com "trailers" de linha. Agora está 100% IE :).
 
 =back
 
@@ -755,18 +755,18 @@ B<2.02> I<(25/Mai/2003)> - Arrumado o repentinamente surgido problema com "trail
 
 =item 1
 
-A utilizaÃ§Ã£o desse I<mÃ³dulo>, assim como distribuiÃ§Ã£o do I<mÃ³dulo> e/ou
-suas I<versÃµes> (alteraÃ§Ãµes feitas no I<mÃ³dulo> por terceiros) somente
-deve ser feita com autorizaÃ§Ã£o explicita proveniente do I<autor>.
+A utilização desse I<módulo>, assim como distribuição do I<módulo> e/ou
+suas I<versões> (alterações feitas no I<módulo> por terceiros) somente
+deve ser feita com autorização explicita proveniente do I<autor>.
 
 =item 2
 
-Aqueles que tem cÃ³pia autorizada do I<mÃ³dulo> tem o direito de gerar
-I<versÃµes> (alterar o I<mÃ³dulo> conforme for conveniente a eles). B<C<(*)>>
+Aqueles que tem cópia autorizada do I<módulo> tem o direito de gerar
+I<versões> (alterar o I<módulo> conforme for conveniente a eles). B<C<(*)>>
 
 =item 3
 
-Qualquer programa feito com utilizaÃ§Ã£o desse I<mÃ³dulo> pode ser usado
+Qualquer programa feito com utilização desse I<módulo> pode ser usado
 para quaisquer fins (inclusive lucrativos). B<C<(*)>>
 
 =back
@@ -775,7 +775,7 @@ para quaisquer fins (inclusive lucrativos). B<C<(*)>>
 
 =item B<C<(*)>>
 
-Desde que nÃ£o haja infraÃ§Ã£o do C<item 1>.
+Desde que não haja infração do C<item 1>.
 
 =back
 
